@@ -1254,50 +1254,10 @@
           if (remaining <= 0) runRefresh(); else countdownEl.textContent = String(remaining);
         }, 1000);
 
-        /* ---------- Auto-scroll: the board drifts on its own, like the real one ---------- */
-        function activeScroller() {
-          if (currentView === 'big') {
-            var s = document.querySelector('#screen-' + currentScreen + ' [data-scroller]');
-            return s || null;
-          }
-          return null; /* tablet + hologram drift on the window */
-        }
-        var userHoldUntil = 0, dwellUntil = 0, dir = 1;
-        function hold() { userHoldUntil = Date.now() + 4000; }
-        ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, hold, { passive: true }); });
-        document.querySelectorAll('[data-scroller]').forEach(function (el) {
-          el.addEventListener('wheel', hold, { passive: true });
-          el.addEventListener('touchstart', hold, { passive: true });
-          el.addEventListener('pointerdown', hold);
-        });
-        var lastFrame = null;
-        function step(ts) {
-          if (lastFrame === null) lastFrame = ts;
-          var dt = Math.min(ts - lastFrame, 64); lastFrame = ts;
-          var now = Date.now();
-          if (!reduceMotion && now > userHoldUntil && now > dwellUntil) {
-            var sc = activeScroller();
-            if (sc) {
-              var max = sc.scrollHeight - sc.clientHeight;
-              if (max > 40) {
-                var y = sc.scrollTop + dir * dt * 0.03;
-                if (y >= max) { y = max; dir = -1; dwellUntil = now + 2500; }
-                else if (y <= 0) { y = 0; dir = 1; dwellUntil = now + 2500; }
-                sc.scrollTop = y;
-              }
-            } else {
-              var maxW = document.documentElement.scrollHeight - window.innerHeight;
-              if (maxW > 40) {
-                var yw = window.scrollY + dir * dt * 0.03;
-                if (yw >= maxW) { yw = maxW; dir = -1; dwellUntil = now + 2500; }
-                else if (yw <= 0) { yw = 0; dir = 1; dwellUntil = now + 2500; }
-                window.scrollTo(0, yw);
-              }
-            }
-          }
-          window.requestAnimationFrame(step);
-        }
-        if (!reduceMotion) setTimeout(function () { window.requestAnimationFrame(step); }, 1500);
+        /* ---------- Board sits still: no auto-scroll, no auto-rotate ----------
+           The page stays exactly where the viewer leaves it. Scrolling and
+           view/screen switching happen by hand only (the switchers above).
+           In-place data refresh (clock + 20s re-check) is unchanged. */
       })();
     </script>
   </body>
