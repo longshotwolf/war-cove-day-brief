@@ -847,6 +847,22 @@
       .fp-head .s, .fp-alarm-note, .kw-foot,
       .pot-card .pb, .bc-src .sw, .pq-note,
       .nr-sub, #tw-live-src{ display:none !important; }
+      /* Finish of the strip (Nov 17): the Four Points feed's standing
+         explainer line, Tessa's per-window standing note (her live
+         check overwrites that line with the real P1–P4 prices, which
+         keep standing), and her no-alert-yet line stand down too. */
+      .fp-note, .tessa-stand-note, .tessa-none{ display:none !important; }
+      /* Reader/temp windows (the Warlord's word, Nov 17, from his photo
+         of Terra's screen): a window shows the coin, the headline figure
+         and the army line — the explainer sentence under the read
+         ("Live $… · price $… above this low · the forming MONTH candle
+         · Binance public feed" and its kin on every reader) does not render.
+         The engines keep writing that line in the DOM as before; this
+         is presentation only. Covers Terra, Vega, Sierra, Mina and the
+         six frame readers — every coin window that carries data-office.
+         Tessa's windows carry no data-office: her live P1–P4 price line
+         is a read, not an explainer, and keeps standing. */
+      .coin-win[data-office] .cw-sub{ display:none !important; }
     </style>
   </head>
   <body class="view-tablet">
@@ -1514,7 +1530,7 @@
                 <div class="fp-body">
                   <ul class="fp-feed" id="fp-feed">
                     <li><b>9:07 PM NYC</b> — Field Radar #737 locked: RED holds, bulls 39%.<span class="latest">LATEST</span></li>
-                    <li><b>Watcher on post</b> — hits land in this window on their own, ~every 20 seconds a check, newest on top.</li>
+                    <li class="fp-note"><b>Watcher on post</b> — hits land in this window on their own, ~every 20 seconds a check, newest on top.</li>
                   </ul>
                 </div>
               </div>
@@ -1859,7 +1875,7 @@
                 }).join('') + '</div>';
             });
             thtml += readStamp(off, w.name + ' · TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS')) +
-              '<p class="scale-note">She watches <b>LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB</b> against the ' + (bottom ? 'bottom' : 'top') + ' of every frame — all six coins on all five frames, each window carrying its frame\u2019s own forming-candle standing ' + (bottom ? 'low' : 'high') + ' as a live figure, read off the shared feed layer on the board\u2019s cycle (Binance.US first, the Binance public feed, Coinbase, Kraken and MEXC behind it — when one source drops, the next picks it up, and her stamp names the source that answered); a pass the feed misses leaves the standing house-tape read in place, labeled standing. The month ' + (bottom ? 'bottom' : 'top') + ' is the strongest, the 6-hour the weakest. <b>Her light law:</b> a coin\u2019s light burns only while price sits on its level — the moment price reaches the level, the army flashes for 60 seconds, then the light goes out. <b>Her bell law:</b> a fresh hit rings the locked dual sound — the opening bell and the cash register cha-ching struck together — once per fresh hit.</p></div>';
+              '<p class="scale-note">She watches <b>LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB</b> against the ' + (bottom ? 'bottom' : 'top') + ' of every frame — all six coins on all five frames, each window carrying its frame\u2019s own forming-candle standing ' + (bottom ? 'low' : 'high') + ' as a live figure, read off the shared feed layer on the board\u2019s cycle (the Binance public feed first — data-api.binance.vision, the master\u2019s door — Coinbase, Kraken and MEXC behind it — when one source drops, the next picks it up, and her stamp names the source that answered); a pass the feed misses leaves the standing house-tape read in place, labeled standing. The month ' + (bottom ? 'bottom' : 'top') + ' is the strongest, the 6-hour the weakest. <b>Her light law:</b> a coin\u2019s light burns only while price sits on its level — the moment price reaches the level, the army flashes for 60 seconds, then the light goes out. <b>Her bell law:</b> a fresh hit rings the locked dual sound — the opening bell and the cash register cha-ching struck together — once per fresh hit.</p></div>';
             return thtml;
           }
           if (w.office === 'tessa') {
@@ -1871,7 +1887,7 @@
               '<span class="fl">6H<small>on watch</small></span></div>' +
               '<div class="coin-grid" style="margin-top:10px">' + ['LTC', 'BTC', 'ETH'].map(function (cn) {
                 return ['MONTH', 'WEEK', 'DAY', '6H'].map(function (fm) {
-                  return '<div class="coin-win" data-tessa-win="' + cn + '|' + fm + '"><p class="cw-name">' + cn + ' — ' + fm + '</p><p class="cw-big">Standing watch</p><p class="cw-sub">Her Four Points for this frame stand here — P1 · P2 · P3 · P4 land on the first live check, and the window keeps standing between checks, the Sable way</p></div>';
+                  return '<div class="coin-win" data-tessa-win="' + cn + '|' + fm + '"><p class="cw-name">' + cn + ' — ' + fm + '</p><p class="cw-big">Standing watch</p><p class="cw-sub"><span class="tessa-stand-note">Her Four Points for this frame stand here — P1 · P2 · P3 · P4 land on the first live check, and the window keeps standing between checks, the Sable way</span></p></div>';
                 }).join('');
               }).join('') + '</div>' +
               readStamp('tessa', 'TESSA · TRADE ALERTS') +
@@ -2509,16 +2525,20 @@
            A coin that cannot be fetched, or whose candle reads indecisive,
            shows HELD — never a stale or invented figure. Nothing is cached:
            every re-check derives every figure fresh off that pass's candles. */
-        /* Feed hosts, in the order they are tried. Binance.US stands FIRST:
-           the Warlord reads this board in the United States (Arizona), and
-           the two Binance global hosts that used to lead this list refuse
-           US connections (HTTP 451, restricted location) — on his tablet
-           every live pass died on that refusal and the rooms never rose
-           off the standing tape. Binance.US is the US exchange on the same
-           public API shape and answers where he is; the global hosts stay
-           behind it for readers outside the US, and two more US sources
-           (Coinbase, Kraken) stand behind them in the feed layer below. */
-        var SIERRA_BASES = ['https://api.binance.us', 'https://data-api.binance.vision', 'https://api.binance.com'];
+        /* Feed hosts, in the order they are tried. The master's door
+           stands FIRST: data-api.binance.vision — Binance's US-open
+           public data host, the door the master board drinks from,
+           live with real candles and real volume. The old US-exchange
+           host used to lead this list and served dead data (flat
+           repeated candles, zero volume, zero trades), so every
+           reader correctly held; it is off the list entirely and no
+           window names it as a source again. The Binance global host
+           stands SECOND: if a fetch off the master's door drops, it
+           picks the read up,
+           and Coinbase, Kraken and MEXC stand behind both in the feed
+           layer below. A read that still cannot land shows HELD —
+           never a stale figure. */
+        var SIERRA_BASES = ['https://data-api.binance.vision', 'https://api.binance.com'];
         var SIERRA_BIG = { LTC: 1.0, BTC: 1000.0, ETH: 30.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var SIERRA_CYCLE = { LTC: 0.30, BTC: 300.0, ETH: 9.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var sierraBusy = false;
@@ -2675,8 +2695,9 @@
              · At most FOUR requests on the wire at once; the rest queue.
                A tablet connection is never flooded again.
              · Sources tried in order, each on the same candle shape:
-               Binance.US (answers in the US) → Binance public data →
-               Binance global → Coinbase (US) → Kraken (US). Coinbase and
+               Binance public data (data-api.binance.vision — the
+               master's door) → Binance global → Coinbase (US) →
+               Kraken (US). Coinbase and
                Kraken frames are aggregated from their own granularities
                (Coinbase has no 3-minute bar: three 1-minute bars are
                folded into it, epoch-aligned, forming bar last).
@@ -2725,7 +2746,7 @@
               return fetchJSONQ(base + '/api/v3/klines?symbol=' + sym + '&interval=' + interval + '&limit=60').then(function (rows) {
                 var raw = bnRaw(rows);
                 if (raw.length < 3) throw new Error('shape');
-                return { raw: raw, src: base.indexOf('binance.us') > -1 ? 'Binance.US' : 'Binance public feed' };
+                return { raw: raw, src: 'Binance public feed' };
               });
             });
           });
@@ -2851,6 +2872,15 @@
             return rd;
           });
         }
+        /* Per-coin freshness stamps — the lane fix (Nov 17): her old
+           pass judged freshness off ONE stamp for all six coins, so a
+           coin whose read stopped landing kept its old army line
+           standing at full brightness, dressed as live, as long as any
+           sister coin kept landing. Each coin now carries its own
+           landing time; a coin that cannot land a fresh read shows
+           HELD in plain words instead of the old line. Delivery only —
+           her doctrine, scales and wording do not move. */
+        var sierraCoinLiveAt = {};
         function refreshSierra() {
           if (sierraBusy) return;
           if (!document.querySelector('.coin-win[data-office="sierra"]')) return;
@@ -2860,6 +2890,7 @@
           var jobs = SIX_COINS.map(function (coin) {
             return sierraFetchWithFallback(coin).then(function (rd) {
               anyLive = true;
+              sierraCoinLiveAt[coin] = Date.now();
               var win = sierraWinEl(coin); if (!win) return;
               var big = win.querySelector('.cw-big'), sub = win.querySelector('.cw-sub');
               if (rd.held) {
@@ -2877,10 +2908,10 @@
               win.classList.add('flash');
               setTimeout(function () { win.classList.remove('flash'); }, 700);
             }).catch(function () {
-              /* A coin the feed misses keeps its last lines standing —
-                 the HELD banner over her window carries the staleness,
-                 the locked board's way. The tape rotation no longer
-                 repaints her window under a held read. */
+              /* A coin the feed misses shows HELD in plain words —
+                 never its old army line dressed as live. The next
+                 five-second pass tries the lane again. */
+              sierraHeld(coin, 'Live read did not land this pass · re-checking every 5 seconds · no figure stands in its place');
             });
           });
           Promise.all(jobs).then(function () {
@@ -2919,6 +2950,22 @@
           var banner = document.querySelector('[data-sierra-banner]');
           var grid = document.querySelector('.coin-grid.army-grid');
           if (!banner || !grid) return;
+          /* Per-coin sweep, same tick: any coin whose own last live
+             landing is three cadences old (15s against her 5s pass) —
+             or that has never landed since the first pass completed —
+             goes HELD in plain words, even if a wedged pass never
+             fired its catch. A fresh landing repaints it live. */
+          if (sierraPassDone) {
+            SIX_COINS.forEach(function (coin) {
+              var at = sierraCoinLiveAt[coin] || 0;
+              if (Date.now() - at <= 15000) return;
+              var win = sierraWinEl(coin); if (!win) return;
+              var big = win.querySelector('.cw-big');
+              if (big && big.textContent !== 'HELD') {
+                sierraHeld(coin, 'Live read has not landed · re-checking every 5 seconds · no figure stands in its place');
+              }
+            });
+          }
           var age = sierraLastLiveAt ? Date.now() - sierraLastLiveAt : Infinity;
           if (!sierraPassDone || age <= 10000) {
             banner.hidden = true;
@@ -2937,8 +2984,9 @@
            had a live engine, and Sable never did — her six windows only
            ever carried the standing tape's words, never a figure. Now
            she reads the way the locked board reads her: per coin, off
-           the same shared feed layer (Binance.US first, the public
-           feed, Coinbase, Kraken, MEXC behind it — one request per
+           the same shared feed layer (the Binance public feed first —
+           data-api.binance.vision, the master's door — Coinbase,
+           Kraken, MEXC behind it — one request per
            coin + frame per pass, shared with Juno's 6H candles), the
            SPREAD = live price − the forming 6H Heikin-Ashi candle's own
            price, painted as the figure with its band word on its side,
@@ -3131,7 +3179,12 @@
               win.classList.add('flash');
               setTimeout(function () { win.classList.remove('flash'); }, 700);
             }).catch(function () {
-              liveStanding(fr, coin);
+              /* Lane fix (Nov 17), the same check as Sierra's: a coin
+                 whose fresh read cannot land shows HELD in plain words
+                 — never the standing tape's army line dressed as live
+                 (its standing label rode the sub-line, which no longer
+                 renders on reader windows). */
+              liveHeld(fr.office, coin, 'Live read did not land this pass · re-checking on the board cycle · no figure stands in its place');
             });
           });
           Promise.all(jobs).then(function () {
@@ -3161,8 +3214,9 @@
            off the same shared feed layer (one request per coin + frame
            per pass, cache-shared with the frame readers and Tessa, who
            ask for these very candles — no new flood on the wire), with
-           the layer's sources standing behind each other: Binance.US,
-           the Binance public feed, Coinbase, Kraken, then MEXC — when
+           the layer's sources standing behind each other: the Binance
+           public feed (data-api.binance.vision, the master's door),
+           Coinbase, Kraken, then MEXC — when
            one drops, the next picks it up, and Wren's stamp names the
            source that answered. Per window, per frame, per coin:
              · TERRA paints the forming candle's standing LOW as the
