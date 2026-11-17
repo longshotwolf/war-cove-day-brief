@@ -2538,7 +2538,22 @@
            and Coinbase, Kraken and MEXC stand behind both in the feed
            layer below. A read that still cannot land shows HELD —
            never a stale figure. */
-        var SIERRA_BASES = ['https://data-api.binance.vision', 'https://api.binance.com'];
+        /* Discord Activity door: inside Discord the page runs in a
+           proxied frame (hostname ends in discordsays.com) that will
+           not let it fetch outside APIs directly. There, Binance
+           candle/ticker calls go first through the relative path
+           "/.proxy/feed" + the API path they would have called on
+           https://data-api.binance.vision (Discord's URL-mapping
+           proxy carries "/.proxy/feed/*" out to that host). The
+           existing direct sources stay behind it in the chain so a
+           dropped proxied call still falls through, and a read that
+           cannot land still shows plain HELD. Outside Discord this
+           is inert: direct sources in the current order, vision
+           host first, exactly as before. */
+        var IN_DISCORD_ACTIVITY = (typeof window !== 'undefined' && window.location && window.location.hostname && window.location.hostname.toLowerCase().endsWith('discordsays.com'));
+        var SIERRA_BASES = IN_DISCORD_ACTIVITY
+          ? ['/.proxy/feed', 'https://data-api.binance.vision', 'https://api.binance.com']
+          : ['https://data-api.binance.vision', 'https://api.binance.com'];
         var SIERRA_BIG = { LTC: 1.0, BTC: 1000.0, ETH: 30.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var SIERRA_CYCLE = { LTC: 0.30, BTC: 300.0, ETH: 9.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var sierraBusy = false;
