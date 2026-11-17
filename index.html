@@ -821,6 +821,32 @@
       #wc-boot .wb-s{ font-size:13px; color:var(--dim); margin:8px 0 0; line-height:1.55; }
       #wc-boot .wb-dot{ width:10px; height:10px; margin:0 auto 14px; border-radius:50%; background:var(--holo-green);
         box-shadow:0 0 12px var(--holo-green-glow); animation:wcPulse 1.6s infinite; }
+
+      /* ===== Browser copy — NO TEXT WALL (the Warlord's standing ruling,
+         restated Nov 17, 2026: "It got all that writing back in again") =====
+         This copy is the live-stream browser source. It carries the
+         company look — offices as rooms, names, jobs, status chips, live
+         windows and numbers — and NOT the recipe / description writing.
+         Every long-form prose class the board uses stands down here:
+         desk description lines, grade-window prose, department blurbs,
+         the target-call doctrine / description / footnotes, the floor
+         about-box, the recipe log, directory and jump-button sub-lines,
+         timeline card notes, office-screen captions, treasury blurbs,
+         production notes and the side-window explainers. Live data is
+         not prose and keeps standing: monitor read lines, coin windows,
+         prices, army lines, status rows, the Four Points hit feed and
+         the Proof Page window itself. This block sits last so it wins
+         over every earlier rule, in every view. */
+      .last, .grade-box, .floor-about, .recipe-log,
+      .tw-doctrine, .tw-desc, .tw-note, .tw-cell .tc-s,
+      .dept .blurb, .os-cap, .scale-note,
+      .proof-screen .ps-r, .email-room p,
+      .live-note, .screen-head .s,
+      .holo-card .cm, .off-card .cm,
+      .od-ln, .tj-ln,
+      .fp-head .s, .fp-alarm-note, .kw-foot,
+      .pot-card .pb, .bc-src .sw, .pq-note,
+      .nr-sub, #tw-live-src{ display:none !important; }
     </style>
   </head>
   <body class="view-tablet">
@@ -1049,23 +1075,19 @@
                           <p class="cm">The always-on Four Points box and the full big-screen floor landed on this board today.</p>
                         </article>
                         <article class="off-card">
-                          <p class="ct">🏆 Paper game — top of the books</p>
-                          <p class="cm">henrywiko leads the board at 107,574 sats.</p>
+                          <p class="ct">📜 Proof Page — the graded record</p>
+                          <p class="cm">Running live in its own window on this board, below.</p>
                         </article>
                       </div>
                     </div>
                   </div>
-                  <div class="gamespots">
-                    <p class="gs-t">Open positions — riding the field</p>
-                    <div class="ticker-mask">
-                      <div class="ticker-track" id="game-ticker">
-                        <div class="ticker-set">
-                          <span><b>CryptoWarLord369</b> · LONG · LTC · 50x · entry on the Nov 12 read · <span class="neg">≈ −1,600 sats</span></span><span class="sep" aria-hidden="true">◆</span>
-                          <span><b>Rain_p</b> · LONG · LTC · down <span class="neg">≈ 2,600–2,800 sats</span> on the Nov 12 books read</span><span class="sep" aria-hidden="true">◆</span>
-                          <span><b>henrywiko</b> · TOP OF THE BOOKS · <span class="pos">107,574 sats</span></span><span class="sep" aria-hidden="true">◆</span>
-                        </div>
-                      </div>
-                    </div>
+                  <!-- THE PROOF PAGE WINDOW — the Warlord's correction for this
+                       browser copy (Nov 16–17, 2026): the paper game board does
+                       NOT run in this copy; the only board that runs in this
+                       seat is the Proof Page, live, on the Day Board. -->
+                  <div class="proof-live" style="margin:0; border-left:0; border-right:0; border-bottom:0; border-radius:0">
+                    <div class="pl-head"><i></i><span>THE PROOF PAGE — LIVE WINDOW · THE GRADED RECORD</span><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener">Open the Record ↗</a></div>
+                    <iframe src="https://longshotwolf.github.io/war-cove-proof-page/" title="The Graded Record — the real published Proof Page, running live on the Day Board" loading="lazy" style="height:420px"></iframe>
                   </div>
                 </section>
 
@@ -1099,7 +1121,7 @@
                         <span class="carmy" style="color:#fda4af">Red · pushing strong</span>
                       </li>
                     </ul>
-                    <p style="font-size:12px; color:rgba(207,250,254,.45); line-height:1.55; margin:6px 2px 0">
+                    <p class="last" style="font-size:12px; color:rgba(207,250,254,.45); line-height:1.55; margin:6px 2px 0">
                       Read #737, locked 9:07 PM NYC, shown with its time. This screen only reads the field:
                       it never trades, never touches the game, never moves a piece.
                     </p>
@@ -1364,7 +1386,7 @@
                         <p class="pb" style="margin-top:8px">Connected direct on platform.lumalabs.ai; its restyle fires the moment he funds it. No amount stands here until he confirms one himself.</p>
                       </article>
                     </div>
-                    <p style="font-size:12px; color:rgba(254,243,199,.45); line-height:1.55; margin:12px 2px 0">Each card shows only what the Warlord has confirmed himself — the amount, the status, and the date he confirmed it. This office never makes a payment and never holds a password or a key: the money moves only in each house's own billing, by his hand.</p>
+                    <p class="last" style="font-size:12px; color:rgba(254,243,199,.45); line-height:1.55; margin:12px 2px 0">Each card shows only what the Warlord has confirmed himself — the amount, the status, and the date he confirmed it. This office never makes a payment and never holds a password or a key: the money moves only in each house's own billing, by his hand.</p>
                   </div>
                 </section>
 
@@ -2390,13 +2412,18 @@
           talkLabel.textContent = attending ? '■ Standing by' : (pres === 'sheity' ? 'Talk to Sheity' : 'Talk to The Enity');
         });
 
-        /* ---------- Game ticker: duplicate for a seamless loop, ~45 px/s ---------- */
+        /* ---------- Game ticker: the paper game board does not run in this
+           browser copy (the Proof Page holds that seat), so the ticker is
+           gone — this stays guarded so its absence can never stop the
+           board's script. ---------- */
         var ticker = document.getElementById('game-ticker');
-        ticker.appendChild(ticker.children[0].cloneNode(true));
-        requestAnimationFrame(function () {
-          var w = ticker.scrollWidth / 2;
-          if (w > 0) ticker.style.animationDuration = Math.max(20, w / 45) + 's';
-        });
+        if (ticker && ticker.children[0]) {
+          ticker.appendChild(ticker.children[0].cloneNode(true));
+          requestAnimationFrame(function () {
+            var w = ticker.scrollWidth / 2;
+            if (w > 0) ticker.style.animationDuration = Math.max(20, w / 45) + 's';
+          });
+        }
 
         /* ---------- New York clock ---------- */
         var clockEl = document.getElementById('nyc-clock');
