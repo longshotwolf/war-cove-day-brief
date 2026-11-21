@@ -16,7 +16,7 @@
     <title>Day Brief War Cove Doctoring</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Great+Vibes&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <style>
       button, [role="button"], select, summary { min-height: 2.25rem; }
       * { box-sizing: border-box; }
@@ -563,6 +563,36 @@
       .proof-live .pl-head a{ margin-left:auto; font-family:Archivo, system-ui, sans-serif; letter-spacing:.02em; font-size:11.5px; color:#6ee7b7; font-weight:700; }
       .proof-live iframe{ width:100%; height:360px; border:0; display:block; background:#f5efe0; }
       .proof-live .pl-foot{ padding:7px 11px; font-size:11.5px; color:rgba(209,250,229,.55); line-height:1.5; border-top:1px solid rgba(110,231,183,.25); }
+      /* The Proof Page window's own record — the v126 rebuild, carried
+         from the Day Brief: the entries build inside the window from
+         this board's own record (Sable's spread reads + Sierra's
+         three-minute reads, each with the trainer's grade where one
+         stands), re-read every minute; no outside page stands between
+         the record and this window any more. The window's shell, title
+         and Open the Record link stand exactly as they stood — the
+         sheet inside wears the Proof Page's own parchment and feather
+         hand (Great Vibes), his red on the entry heads, her green on
+         the prose, and when the board's own record cannot be read at
+         all the sheet says HELD instead of sitting blank. */
+      .proof-record{ height:420px; overflow-y:auto; overflow-x:hidden; background:#2e1f0f; }
+      .proof-record .pr-sheet{ min-height:100%; background:linear-gradient(180deg,#f8edcb 0%,#f1ddab 55%,#ecd69e 100%);
+        box-shadow:inset 0 0 30px rgba(122,90,46,.25); padding:10px 12px;
+        font-family:"Great Vibes","Segoe Script","Brush Script MT",cursive; letter-spacing:.01em; }
+      @media (min-width:640px){ .proof-record .pr-sheet{ padding:10px 16px; } }
+      .proof-record .pr-intro{ font-size:19px; line-height:1.4; color:#175c2a; margin:0; padding-bottom:4px; }
+      .proof-record .pr-entry{ border-bottom:1px solid rgba(122,90,46,.3); padding:6px 0; }
+      .proof-record .pr-entry:last-child{ border-bottom:0; }
+      .proof-record .pr-h{ font-size:19px; line-height:1.4; color:#8c1d10; margin:0; }
+      .proof-record .pr-b{ font-size:17px; line-height:1.4; color:#2c1e08; margin:0; }
+      .proof-record .pr-note{ font-size:19px; line-height:1.4; color:rgba(23,92,42,.75); margin:0; padding:4px 0; }
+      .proof-record .pr-held{ min-height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+        text-align:center; padding:16px 12px; background:linear-gradient(180deg,#f8edcb 0%,#f1ddab 55%,#ecd69e 100%);
+        box-shadow:inset 0 0 30px rgba(122,90,46,.25);
+        font-family:"Great Vibes","Segoe Script","Brush Script MT",cursive; letter-spacing:.01em; }
+      .proof-record .pr-held-t{ font-family:Archivo, system-ui, sans-serif; font-size:15px; font-weight:900; letter-spacing:.35em; text-transform:uppercase; color:#8c1d10; margin:0; }
+      .proof-record .pr-held-b{ font-family:Archivo, system-ui, sans-serif; font-size:12px; line-height:1.5; color:#5a4020; max-width:420px; margin:0; }
+      .proof-record .pr-held button{ font-family:Archivo, system-ui, sans-serif; font-size:10.5px; font-weight:900; letter-spacing:.08em; text-transform:uppercase;
+        color:#5a4020; background:transparent; border:1px solid rgba(122,90,46,.6); border-radius:999px; padding:6px 12px; cursor:pointer; margin-top:2px; min-height:30px; }
 
       /* ===== v81: Offices Directory (top of the day board) ===== */
       .offices-dir{ margin-bottom:12px; border:1px solid rgba(103,232,249,.35); background:rgba(34,211,238,.06); border-radius:12px; padding:10px 12px; }
@@ -1100,10 +1130,23 @@
                   <!-- THE PROOF PAGE WINDOW — the Warlord's correction for this
                        browser copy (Nov 16–17, 2026): the paper game board does
                        NOT run in this copy; the only board that runs in this
-                       seat is the Proof Page, live, on the Day Board. -->
+                       seat is the Proof Page, live, on the Day Board.
+                       REBUILT to the Day Brief's v126 (the Warlord's Go,
+                       Nov 20, 2026): the window no longer holds the outside
+                       Proof Page in a frame — its entries build inside the
+                       window from this board's own record (Sable's spread
+                       reads + Sierra's three-minute reads, with the trainer's
+                       grade where one stands), re-read every minute, on the
+                       same shell, title and Open the Record link, drifting
+                       at the same pace — and HELD, on the parchment, instead
+                       of a blank window when the record cannot be read. -->
                   <div class="proof-live" style="margin:0; border-left:0; border-right:0; border-bottom:0; border-radius:0">
                     <div class="pl-head"><i></i><span>THE PROOF PAGE — LIVE WINDOW · THE GRADED RECORD</span><a href="https://longshotwolf.github.io/war-cove-proof-page/" target="_blank" rel="noopener">Open the Record ↗</a></div>
-                    <iframe src="https://longshotwolf.github.io/war-cove-proof-page/" title="The Graded Record — the real published Proof Page, running live on the Day Board" loading="lazy" style="height:420px"></iframe>
+                    <div class="proof-record" id="proof-record" role="region" data-locked-room="proof-page-record" aria-label="Longshot Wolf's Scroll of Proof — the graded record, built into this window from the board's own record; auto-scrolling, scroll by hand any time and it resumes on its own">
+                      <div class="pr-sheet" id="proof-record-sheet">
+                        <p class="pr-note">Reading the board&rsquo;s own record&hellip;</p>
+                      </div>
+                    </div>
                   </div>
                 </section>
 
@@ -2920,6 +2963,7 @@
               big.classList.toggle('up', rd.dir === 'up');
               big.classList.toggle('down', rd.dir === 'down');
               sub.textContent = 'Live ' + sierraPriceText(rd.live) + ' \u00b7 Spread ' + sierraSpreadText(coin, rd.spread) + ' \u2014 ' + rd.band + ' \u00b7 live price versus the forming 3-minute candle \u00b7 ' + (rd.src || 'live market feed');
+              proofNote('Sierra', coin, proofBandWord(rd.band), rd.dir === 'up' ? 'green army' : 'red army', new Date());
               win.classList.add('flash');
               setTimeout(function () { win.classList.remove('flash'); }, 700);
             }).catch(function () {
@@ -2933,6 +2977,7 @@
             sierraBusy = false;
             if (anyLive) sierraLastLiveAt = Date.now();
             sierraPassDone = true;
+            proofPass.sierra = anyLive; proofRender();
             setStampState('sierra', anyLive
               ? 'SIERRA · THE THREE MINUTE · LIVE — LIVE MARKET FEED'
               : 'SIERRA · THE THREE MINUTE · STANDING — HOUSE TAPE');
@@ -2994,6 +3039,169 @@
           grid.classList.add('held');
         }, 1000);
 
+        /* ---------- The Proof Page window's own record — the v126 rebuild ----------
+           Carried from the Day Brief (the Warlord's Go, Nov 20, 2026):
+           the day board's Proof Page window used to hold the OUTSIDE
+           Proof Page in a frame; when that page failed to paint, the
+           window sat blank. Its entries now build inside the window
+           from this board's own record — the same reads Sable's and
+           Sierra's engines land in their offices below (her spread
+           reads, her three-minute reads), each standing with the
+           trainer's grade where one stands; on this board no read
+           carries a grade yet (their grade windows read "Grade
+           pending — record building"), so every entry stands OPEN —
+           NOT GRADED YET, and no grade or correction is invented to
+           fill it. A read joins the record when it lands changed —
+           a new band or a new army — never twice for the same stand.
+           The window re-reads the record every minute, so new entries
+           land on their own. The drift is the window's own, with the
+           same manners and the same pace the frame presentation
+           carried: 45 px/s, any touch / wheel / hand scroll pauses
+           it, ~4 s idle resumes it, a 1.5 s beat before it starts, a
+           2 s beat at the bottom, then back to the top. And when the
+           board's own record cannot be read at all — both engines'
+           passes failed and no read has ever landed — the window
+           says so plainly: HELD, on the parchment, instead of a
+           blank sheet. Prudence's monitor keeps the live published
+           page, exactly as the Day Brief keeps it in hers. */
+        var proofEntries = [];
+        var proofLastKey = {};
+        var proofPass = { sable: null, sierra: null };
+        var proofEverLive = false;
+        var proofDriftSync = null;
+        function proofBandWord(band) {
+          return String(band || '').replace(/ (up|down)$/, '');
+        }
+        function proofClock(d) {
+          return d.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' });
+        }
+        function proofNote(bot, coin, band, army, at) {
+          if (typeof proofEntries === 'undefined') return;
+          var key = bot + '|' + coin, sig = band + '|' + army;
+          if (proofLastKey[key] === sig) return;
+          proofLastKey[key] = sig;
+          proofEntries.unshift({ bot: bot, coin: coin, band: band, army: army, at: at || new Date() });
+          if (proofEntries.length > 60) proofEntries.length = 60;
+          proofEverLive = true;
+          proofRender();
+        }
+        function proofHeld() {
+          return !proofEverLive && proofPass.sable === false && proofPass.sierra === false;
+        }
+        function proofRender() {
+          var wrap = document.getElementById('proof-record');
+          var sheet = document.getElementById('proof-record-sheet');
+          if (!wrap || !sheet) return;
+          var st = wrap.scrollTop;
+          if (proofHeld()) {
+            sheet.className = 'pr-held';
+            sheet.innerHTML = '<p class="pr-held-t">Held</p>' +
+              '<p class="pr-held-b">The board&rsquo;s own record didn&rsquo;t load, so the scroll stands held rather than blank. The full record stands one tap away on Open the Record above.</p>' +
+              '<button type="button" id="proof-retry">Read the record again</button>';
+            var btn = document.getElementById('proof-retry');
+            if (btn) btn.addEventListener('click', function () {
+              proofPass.sable = null; proofPass.sierra = null;
+              sheet.className = 'pr-sheet';
+              sheet.innerHTML = '<p class="pr-note">Reading the board&rsquo;s own record&hellip;</p>';
+              refreshSable(); refreshSierra();
+              setTimeout(proofRender, 6000);
+            });
+            return;
+          }
+          sheet.className = 'pr-sheet';
+          if (!proofEntries.length) {
+            sheet.innerHTML = '<p class="pr-note">Reading the board&rsquo;s own record&hellip;</p>';
+            return;
+          }
+          var h = '<p class="pr-intro">' + proofEntries.length.toLocaleString('en-US') + ' reads stand on the record. Newest first.</p>';
+          proofEntries.forEach(function (e) {
+            h += '<div class="pr-entry"><p class="pr-h">' + e.bot + ' &middot; ' + e.coin + ' &middot; OPEN — NOT GRADED YET &middot; ' + proofClock(e.at) + ' ET</p>' +
+              '<p class="pr-b">' + e.band + ' — ' + e.army + '</p></div>';
+          });
+          sheet.innerHTML = h;
+          wrap.scrollTop = st;
+          if (proofDriftSync) proofDriftSync(st);
+        }
+        /* The drift — the same drive, the same constants, the same
+           manners as the Day Brief's window runs: the drive keeps its
+           own position tally and only writes it to the screen, a
+           scroll jump past the echo tolerance is his hand and pauses
+           the drift, and a twice-a-second watchdog drives the drift
+           itself if the frame chain stalls. */
+        (function proofDrift() {
+          var el = document.getElementById('proof-record');
+          if (!el) return;
+          var SPEED = 45; /* px per second — the same reading pace as the frame presentation */
+          var RESUME_MS = 4000, START_DELAY = 1500, BOTTOM_PAUSE = 2000, ECHO_TOLERANCE = 6;
+          var raf = null, last = null, lastStepAt = 0, started = false;
+          var userHold = false, bottomHold = false;
+          var resumeTimer = 0, bottomTimer = 0, startTimer = 0, watchdog = 0;
+          var pos = el.scrollTop;
+          proofDriftSync = function (v) { pos = v; };
+          function maxY() { return Math.max(0, el.scrollHeight - el.clientHeight); }
+          function apply() { el.scrollTop = pos; }
+          function start() { if (raf === null && !userHold && !bottomHold) raf = requestAnimationFrame(step); }
+          function enterBottom() {
+            bottomHold = true;
+            if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+            last = null;
+            if (bottomTimer) window.clearTimeout(bottomTimer);
+            bottomTimer = window.setTimeout(function () {
+              bottomHold = false; pos = 0; apply(); lastStepAt = performance.now(); start();
+            }, BOTTOM_PAUSE);
+          }
+          function advanceBy(dtMs) {
+            var limit = maxY();
+            if (limit <= 0) return;
+            pos = Math.min(pos + (SPEED * dtMs) / 1000, limit);
+            apply();
+            if (pos >= limit - 1) enterBottom();
+          }
+          function step(ts) {
+            if (userHold || bottomHold) { raf = null; last = null; return; }
+            if (last === null) last = ts;
+            var dt = Math.min(100, ts - last);
+            last = ts; lastStepAt = ts;
+            advanceBy(dt);
+            if (bottomHold) { raf = null; last = null; return; }
+            raf = requestAnimationFrame(step);
+          }
+          function pause() {
+            userHold = true;
+            if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+            last = null;
+            if (bottomTimer) { window.clearTimeout(bottomTimer); bottomTimer = 0; bottomHold = false; }
+            if (resumeTimer) window.clearTimeout(resumeTimer);
+            resumeTimer = window.setTimeout(function () {
+              userHold = false; pos = el.scrollTop; lastStepAt = performance.now(); start();
+            }, RESUME_MS);
+          }
+          function onScroll() {
+            if (Math.abs(el.scrollTop - pos) > ECHO_TOLERANCE) { pos = el.scrollTop; pause(); }
+          }
+          el.addEventListener('wheel', pause, { passive: true });
+          el.addEventListener('touchstart', pause, { passive: true });
+          el.addEventListener('touchmove', pause, { passive: true });
+          el.addEventListener('pointerdown', pause);
+          el.addEventListener('scroll', onScroll, { passive: true });
+          startTimer = window.setTimeout(function () {
+            started = true; lastStepAt = performance.now(); start();
+          }, START_DELAY);
+          watchdog = window.setInterval(function () {
+            if (!started || userHold || bottomHold) return;
+            var now = performance.now();
+            if (now - lastStepAt <= 1000) return;
+            if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+            last = null;
+            var dt = Math.min(1500, now - lastStepAt);
+            lastStepAt = now;
+            advanceBy(dt);
+            start();
+          }, 500);
+        })();
+        /* The window re-reads the board's own record every minute. */
+        setInterval(proofRender, 60000);
+
         /* ---------- Sable LIVE — the six hour spread, on an engine ----------
            The gap this closes: every other reader office on this floor
            had a live engine, and Sable never did — her six windows only
@@ -3049,6 +3257,7 @@
               band.textContent = rd.band;
               band.classList.toggle('up', rd.spread > 0);
               band.classList.toggle('down', rd.spread < 0);
+              proofNote('Sable', coin, proofBandWord(rd.band), rd.spread > 0 ? 'spread up' : 'spread down', new Date());
               win.classList.add('flash');
               setTimeout(function () { win.classList.remove('flash'); }, 700);
             }).catch(function () {
@@ -3063,6 +3272,7 @@
           });
           Promise.all(jobs).then(function () {
             sableBusy = false;
+            proofPass.sable = anyLive; proofRender();
             setStampState('sable', anyLive
               ? 'SABLE · THE SIX HOUR SPREAD · LIVE — LIVE MARKET FEED'
               : 'SABLE · THE SIX HOUR SPREAD · HELD — THE LIVE FEED DID NOT ANSWER THIS PASS');
@@ -3876,18 +4086,5 @@
            In-place data refresh (clock + 20s re-check) is unchanged. */
       })();
     </script>
-  <!-- WC-LINK-COUNTER key=day-brief fp=wcfp-255053b596 -->
-<script>
-(function(){try{
-var KEY="day-brief",FP="wcfp-255053b596",DOC="https://longshotwolf.github.io/war-cove-newsroom-preview/simli-endpoint.json";
-var id=null;try{id=window.sessionStorage.getItem("wc-link-id");if(!id){id="w"+Math.random().toString(36).slice(2)+Date.now().toString(36);window.sessionStorage.setItem("wc-link-id",id);}}catch(e){id="w"+Math.random().toString(36).slice(2)+Date.now().toString(36);}
-var ep=null,viewed=false,fails=0;
-function send(path){if(!ep)return;try{fetch(ep+path+"?page="+encodeURIComponent(KEY)+"&fp="+encodeURIComponent(FP)+"&id="+encodeURIComponent(id),{mode:"cors",cache:"no-store",keepalive:true}).then(function(r){if(!r.ok)throw 0;fails=0;if(path==="/view")viewed=true;}).catch(function(){fails++;if(fails>=2){ep=null;discover();}});}catch(e){}}
-function discover(){try{fetch(DOC+"?cb="+Date.now(),{mode:"cors",cache:"no-store"}).then(function(r){return r.json();}).then(function(j){if(j&&j.counter){ep=j.counter;if(!viewed)send("/view");}}).catch(function(){});}catch(e){}}
-discover();
-setInterval(function(){if(ep){if(!viewed)send("/view");else send("/beat");}else discover();},20000);
-}catch(e){}})();
-</script>
-<!-- /WC-LINK-COUNTER -->
-</body>
+  </body>
 </html>
