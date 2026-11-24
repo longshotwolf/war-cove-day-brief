@@ -316,6 +316,77 @@
          mark the desk the moment the jump lands on it. */
       .desk-card{ scroll-margin-top:10px; }
       .desk-card.desk-flash{ border-color:#34d399; box-shadow:0 0 0 2px rgba(52,211,153,.75), 0 0 34px rgba(16,185,129,.45); }
+      /* ===== Temp HIT lights — the Warlord's fault report (Nov 23, 2026):
+         "them lights don't flash when temp tops and temp bottoms hit."
+         The old hit signal was the .flash class alone — a faint border
+         tint for 700 ms, easy to miss and gone before eyes land on it.
+         Now a real hit (live price on the forming candle's standing low
+         or high, within the house 0.3% tolerance) lights the coin's own
+         window in its army colour — GREEN flashing for a temp bottom
+         (good long), RED flashing for a temp top (good short) — lights
+         the whole office card the same way, lights that office's jump
+         doors, and stands a flashing banner at the head of the office
+         naming the hit with its strength rank. The light holds while
+         price sits on the level and for 60 seconds after the hit lands,
+         per the house light law, then goes out. ===== */
+      .coin-win{ position:relative; }
+      @keyframes tempHitBottom{ 0%,100%{ background:rgba(52,211,153,.38); box-shadow:0 0 0 2px #34d399, 0 0 26px rgba(52,211,153,.75); } 50%{ background:rgba(52,211,153,.05); box-shadow:0 0 0 1px rgba(52,211,153,.35), 0 0 6px rgba(52,211,153,.18); } }
+      @keyframes tempHitTop{ 0%,100%{ background:rgba(244,63,94,.38); box-shadow:0 0 0 2px #f43f5e, 0 0 26px rgba(244,63,94,.75); } 50%{ background:rgba(244,63,94,.05); box-shadow:0 0 0 1px rgba(244,63,94,.35), 0 0 6px rgba(244,63,94,.18); } }
+      .coin-win.temp-hit-bottom{ border-color:#34d399; animation:tempHitBottom .9s ease-in-out infinite; }
+      .coin-win.temp-hit-bottom .cw-big{ color:#a7f3d0; }
+      .coin-win.temp-hit-top{ border-color:#f43f5e; animation:tempHitTop .9s ease-in-out infinite; }
+      .coin-win.temp-hit-top .cw-big{ color:#fecdd3; }
+      .coin-win.temp-hit-bottom::after, .coin-win.temp-hit-top::after{ content:"● HIT"; position:absolute; top:3px; right:5px;
+        font-size:9px; font-weight:900; letter-spacing:.08em; }
+      .coin-win.temp-hit-bottom::after{ color:#34d399; text-shadow:0 0 8px rgba(52,211,153,.9); }
+      .coin-win.temp-hit-top::after{ color:#fb7185; text-shadow:0 0 8px rgba(244,63,94,.9); }
+      @keyframes officeHitBottom{ 0%,100%{ box-shadow:0 0 0 3px rgba(52,211,153,.95), 0 0 40px rgba(16,185,129,.55); } 50%{ box-shadow:0 0 0 2px rgba(52,211,153,.25), 0 0 10px rgba(16,185,129,.15); } }
+      @keyframes officeHitTop{ 0%,100%{ box-shadow:0 0 0 3px rgba(244,63,94,.95), 0 0 40px rgba(244,63,94,.55); } 50%{ box-shadow:0 0 0 2px rgba(244,63,94,.25), 0 0 10px rgba(244,63,94,.15); } }
+      .desk-card.office-hit-bottom{ border-color:#34d399; animation:officeHitBottom 1s ease-in-out infinite; }
+      .desk-card.office-hit-top{ border-color:#f43f5e; animation:officeHitTop 1s ease-in-out infinite; }
+      .temp-jump button.jump-hit-bottom, .offices-dir button.jump-hit-bottom{ border-color:#34d399; animation:officeHitBottom 1s ease-in-out infinite; }
+      .temp-jump button.jump-hit-top, .offices-dir button.jump-hit-top{ border-color:#f43f5e; animation:officeHitTop 1s ease-in-out infinite; }
+      .temp-hit-banner{ margin:0 0 8px; border-radius:8px; padding:8px 12px; font-size:13.5px; font-weight:900; letter-spacing:.03em; line-height:1.45; }
+      .temp-hit-banner[hidden]{ display:none; }
+      .temp-hit-banner.bottom{ background:rgba(16,185,129,.20); border:1px solid #34d399; color:#a7f3d0; animation:officeHitBottom 1s ease-in-out infinite; }
+      .temp-hit-banner.top{ background:rgba(244,63,94,.20); border:1px solid #f43f5e; color:#fecdd3; animation:officeHitTop 1s ease-in-out infinite; }
+      @media (prefers-reduced-motion: reduce){
+        .coin-win.temp-hit-bottom, .coin-win.temp-hit-top,
+        .desk-card.office-hit-bottom, .desk-card.office-hit-top,
+        .temp-hit-banner.bottom, .temp-hit-banner.top{ animation:none; }
+        .coin-win.temp-hit-bottom{ background:rgba(52,211,153,.30); box-shadow:0 0 0 2px #34d399; }
+        .coin-win.temp-hit-top{ background:rgba(244,63,94,.30); box-shadow:0 0 0 2px #f43f5e; }
+      }
+      /* ===== Liquidation Office — the EKG face (added Nov 23, 2026:
+         this browser copy never carried the office; the master board's
+         office drinks Newhedge's highlights feed, and this one polls
+         the master's own published feed file, the address written in
+         the house record). The trace beats while the office stands
+         open; a NEW print flatlines it for five seconds with the print
+         standing in the center. Headline writing stands in the feather
+         manuscript hand, per his ruling; the print's data keeps the
+         board's readable type. ===== */
+      .liq-manuscript{ font-family:"Great Vibes","Segoe Script",cursive; letter-spacing:.02em; }
+      .liq-face{ position:relative; border:1px solid rgba(251,113,133,.45); border-radius:8px; overflow:hidden;
+        background:radial-gradient(ellipse 90% 80% at 50% 40%, rgba(80,10,30,.35), rgba(5,4,12,.96) 70%);
+        box-shadow:inset 0 0 26px rgba(251,113,133,.08); }
+      .liq-ekg{ display:block; width:100%; height:92px; }
+      .liq-beat{ fill:none; stroke:#fb7185; stroke-width:2.4; stroke-linejoin:round; stroke-linecap:round;
+        filter:drop-shadow(0 0 6px rgba(251,113,133,.85)); stroke-dasharray:340 1700; animation:liqTrace 2.8s linear infinite; }
+      @keyframes liqTrace{ from{ stroke-dashoffset:2040; } to{ stroke-dashoffset:0; } }
+      .liq-flatline{ stroke:#fb7185; stroke-width:2; opacity:0; filter:drop-shadow(0 0 6px rgba(251,113,133,.85)); }
+      .liq-face.flat .liq-beat{ display:none; }
+      .liq-face.flat .liq-flatline{ opacity:1; }
+      .liq-center{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center;
+        padding:10px 14px; font-size:15px; font-weight:900; letter-spacing:.12em; color:#fecdd3;
+        text-shadow:0 0 12px rgba(251,113,133,.65); pointer-events:none; line-height:1.5; }
+      .liq-face.flat .liq-center{ font-size:16.5px; color:#fff1f2; letter-spacing:.05em; }
+      .liq-rows{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+      .liq-cell{ flex:1 1 128px; border:1px solid rgba(251,113,133,.3); background:rgba(251,113,133,.05); border-radius:6px; padding:7px 10px; }
+      .liq-cell .lc-l{ display:block; font-size:10px; font-weight:900; letter-spacing:.2em; color:#fda4af; }
+      .liq-cell .lc-v{ display:block; font-size:16px; font-weight:900; color:#fff1f2; margin-top:2px; line-height:1.3; }
+      .desk-card.liq-hit{ border-color:#fb7185; animation:officeHitTop 1s ease-in-out infinite; }
+      @media (prefers-reduced-motion: reduce){ .liq-beat{ animation:none; } .desk-card.liq-hit{ animation:none; box-shadow:0 0 0 2px #fb7185; } }
       .temp-jump{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
       .temp-jump button{ flex:1 1 200px; font:inherit; text-align:left; border:1px solid rgba(110,231,183,.5); background:rgba(4,20,11,.85);
         border-radius:10px; padding:10px 12px; cursor:pointer; color:var(--text); min-height:48px; }
@@ -1064,7 +1135,7 @@
           <button type="button" id="view-holo" aria-pressed="false">Desk hologram</button>
           <button type="button" id="view-big" aria-pressed="false">Big Screen</button>
         </div>
-        <a class="kick-pill" href="https://kick.com/longshotwolf" target="_blank" rel="noopener">📺 KICK · <span id="kick-count-pill">243</span> followers</a>
+        <a class="kick-pill" href="https://kick.com/longshotwolf" target="_blank" rel="noopener">📺 KICK · <span id="kick-count-pill">250</span> followers</a>
         <div class="clock-chip" role="status" aria-label="Board clock and refresh">
           <span class="live-dot" aria-hidden="true"></span>
           <span id="nyc-clock">--:--:--</span><span>NYC</span>
@@ -1137,7 +1208,7 @@
                 <div class="row"><span>CEO</span><b>The Enity</b></div>
                 <div class="row"><span>President</span><b>Sheity</b></div>
                 <div class="row"><span>Research Mgr</span><b>Verity</b></div>
-                <div class="row"><span>Kick</span><b><span id="kick-count-house">243</span> followers</b></div>
+                <div class="row"><span>Kick</span><b><span id="kick-count-house">250</span> followers</b></div>
                 <div class="row"><span>Top of the books</span><b>henrywiko · 107,574</b></div>
               </div>
             </div>
@@ -1176,7 +1247,7 @@
                         </button>
                         <button type="button" class="od-wide" data-open-screen="company" aria-label="Open the Company Floor — every bot office, the reader offices among them">
                           <span class="od-nm">🏢 THE COMPANY FLOOR — EVERY BOT OFFICE <span class="arr" aria-hidden="true">›</span></span>
-                          <span class="od-ln">Sable reads the six hour spread · Sierra reads the three minute · Terra &amp; Vega watch the temps, standing right under Sierra · Mina reads THE ONE MINUTE · under her, the six new readers — Hera the ONE HOUR · Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH · Tessa fires the trade alerts · the whole crew at their desks</span>
+                          <span class="od-ln">Sable reads the six hour spread · Mina reads THE ONE MINUTE, standing right under Sable · Sierra reads the three minute, standing right under Mina · Terra &amp; Vega watch the temps, standing right under Sierra · under them, the six timeframe readers — Hera the ONE HOUR · Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH · Tessa fires the trade alerts · the whole crew at their desks</span>
                         </button>
                         <button type="button" class="od-wide" data-open-desk="terra" aria-label="Go straight to Terra — Temp Bottom Watcher, all thirty of her windows">
                           <span class="od-nm">🌡 TERRA — TEMP BOTTOMS <span class="arr" aria-hidden="true">›</span></span>
@@ -1185,6 +1256,10 @@
                         <button type="button" class="od-wide" data-open-desk="vega" aria-label="Go straight to Vega — Temp Top Watcher, all thirty of her windows">
                           <span class="od-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
                           <span class="od-ln">Straight to her desk on the Company Floor — all 30 windows standing: six coins × five frames (MONTH · WEEK · DAY · 4H · 6H), each carrying its forming candle's standing high</span>
+                        </button>
+                        <button type="button" data-open-desk="liquidation" aria-label="Go straight to the Liquidation Office — the big liquidation prints, live from Newhedge">
+                          <span class="od-nm">💀 LIQUIDATION OFFICE <span class="arr" aria-hidden="true">›</span></span>
+                          <span class="od-ln">Straight to her desk on the Company Floor — the EKG face standing, the big liquidation prints landing live from Newhedge's highlights feed</span>
                         </button>
                         <button type="button" data-open-screen="treasury" aria-label="Open the Treasury office — the three money pots, kept separate">
                           <span class="od-nm">💰 TREASURY <span class="arr" aria-hidden="true">›</span></span>
@@ -1340,6 +1415,10 @@
                       <button type="button" data-open-desk="vega" aria-label="Jump straight to Vega — Temp Top Watcher">
                         <span class="tj-nm">🌡 VEGA — TEMP TOPS <span class="arr" aria-hidden="true">›</span></span>
                         <span class="tj-ln">Jump straight to her windows — 30 standing: six coins × MONTH · WEEK · DAY · 4H · 6H</span>
+                      </button>
+                      <button type="button" data-open-desk="liquidation" aria-label="Jump straight to the Liquidation Office">
+                        <span class="tj-nm">💀 LIQUIDATION OFFICE <span class="arr" aria-hidden="true">›</span></span>
+                        <span class="tj-ln">Jump straight to the EKG face — the big liquidation prints, live from Newhedge</span>
                       </button>
                     </div>
                     <!-- The Owner's office — the head of the floor. The Warlord
@@ -1511,12 +1590,13 @@
                       view holding the slots first, so the load stays light and the live stream stays stable.
                       Every desk's
                       monitor runs a LIVE FEED and every desk carries its real grade record off the house record.
-                      <b>The reader offices stand sideways in Market Intel:</b> Sable reads the six-hour spread and
-                      Sierra reads the three-minute in their turned offices, and Terra and Vega stand directly
+                      <b>The reader offices stand sideways in Market Intel, in his order — the six-hour spread, the one-minute office, then the three-minute office:</b> Sable reads the six-hour spread,
+                      Mina reads THE ONE MINUTE standing directly under Sable — all six coins,
+                      her name MINA on the plate, her avatar seated at her desk — and Sierra reads the three-minute
+                      in her turned office standing directly under Mina, and Terra and Vega stand directly
                       under Sierra — Terra watches the temp bottoms and Vega the temp tops, each on five frames —
-                      MONTH · WEEK · DAY · 4H · 6H. Mina's ONE MINUTE office stands under them — all six coins,
-                      her name MINA on the plate, her avatar seated at her desk.
-                      <b>Under Mina, the six timeframe readers stand in a line</b> — Hera the ONE HOUR ·
+                      MONTH · WEEK · DAY · 4H · 6H.
+                      <b>Under Terra and Vega, the six timeframe readers stand in a line</b> — Hera the ONE HOUR ·
                       Cora the FOUR HOUR · Juno the SIX HOUR · Dia the ONE DAY · Sela the ONE WEEK · Mona the MONTH —
                       each reading only her own frame under Sierra's doctrine. Tessa fires the trade
                       alerts, Wren watches every feed, and in Records &amp; Quality Prudence's office stands sideways
@@ -2005,7 +2085,7 @@
                   <h4 class="dna-h">Its connections — the master board&apos;s own</h4>
                   <p class="dna-p"> Every reader lane leads from the same feed the master board drinks from: Binance Vision (data-api.binance.vision) — klines per coin and frame, and ONE batch price call carrying all six coins at once — at the master&apos;s own pull sizes: the 3-minute survey pulls 120 candles, Sable&apos;s 6-hour frame pulls 60, the timeframe readers pull 120, the temp frames pull 100, and Mina&apos;s 1-minute pulls 100. The TWO-WAYS BACKUP LAW stands behind every lane: if the master feed does not answer a pass, the house Bitunix tape picks that pass up, and the window names the pickup for what it is — the source stands printed on the window, never dressed as the lead. A read that cannot land shows HELD; nothing is ever invented to fill a window. </p>
                   <h4 class="dna-h">The roster and the rooms</h4>
-                  <ul class="dna-list"><li><strong>Sheity</strong> — the President, at the front desk: she greets, she talks, and her live face stands on the board by Simli.</li><li><strong>The Enity</strong> — the CEO, in her office at the head of the Company Floor.</li><li><strong>Sable</strong> — the 6-hour spread room.</li><li><strong>Sierra</strong> — the 3-minute survey room.</li><li><strong>Terra</strong> — temp bottoms. <strong>Vega</strong> — temp tops. Their rooms stand directly under Sierra, before Mina.</li><li><strong>Mina</strong> — the 1-minute room.</li><li>The six timeframe readers, each on her own candle: <strong>Hera</strong> 1H · <strong>Cora</strong> 4H · <strong>Juno</strong> 6H · <strong>Dia</strong> DAY · <strong>Sela</strong> WEEK · <strong>Mona</strong> MONTH.</li><li><strong>Tessa</strong> — trade alerts. <strong>Nova</strong> — the Four Points window. <strong>Prudence</strong> — the Proof Page Auditor. <strong>Quinn</strong> — the live QC watch (her office stands on the stock board; her watch stands on this board). <strong>Wren</strong> — the feed watcher. <strong>Ada</strong> — the code checker. <strong>Veda</strong> — training. <strong>Calla</strong> — candle commentary. <strong>Felicity</strong> — the paper game desk. <strong>Bella &amp; Stella</strong> — broadcast.</li><li>The Company Floor carries the departments and the Owner&apos;s Office — his office, with the Litecoin direction window and the Target Calls window standing in it.</li></ul>
+                  <ul class="dna-list"><li><strong>Sheity</strong> — the President, at the front desk: she greets, she talks, and her live face stands on the board by Simli.</li><li><strong>The Enity</strong> — the CEO, in her office at the head of the Company Floor.</li><li><strong>Sable</strong> — the 6-hour spread room.</li><li><strong>Mina</strong> — the 1-minute room. Her room stands directly under Sable, between the six-hour spread and the three-minute.</li><li><strong>Sierra</strong> — the 3-minute survey room. Her room stands directly under Mina.</li><li><strong>Terra</strong> — temp bottoms. <strong>Vega</strong> — temp tops. Their rooms stand directly under Sierra.</li><li>The six timeframe readers, each on her own candle: <strong>Hera</strong> 1H · <strong>Cora</strong> 4H · <strong>Juno</strong> 6H · <strong>Dia</strong> DAY · <strong>Sela</strong> WEEK · <strong>Mona</strong> MONTH.</li><li><strong>Tessa</strong> — trade alerts. <strong>Nova</strong> — the Four Points window. <strong>Prudence</strong> — the Proof Page Auditor. <strong>Quinn</strong> — the live QC watch (her office stands on the stock board; her watch stands on this board). <strong>Wren</strong> — the feed watcher. <strong>Ada</strong> — the code checker. <strong>Veda</strong> — training. <strong>Calla</strong> — candle commentary. <strong>Felicity</strong> — the paper game desk. <strong>Bella &amp; Stella</strong> — broadcast.</li><li>The Company Floor carries the departments and the Owner&apos;s Office — his office, with the Litecoin direction window and the Target Calls window standing in it.</li></ul>
                   <h4 class="dna-h">The spread doctrine — price vs the candle</h4>
                   <p class="dna-p"> The spread is live price measured against the FORMING Heikin-Ashi candle — price vs candle (PVC). On Sable&apos;s 6-hour frame the spread is the live price against the forming candle&apos;s Heikin-Ashi close. THE ARMY FOLLOWS PRICE-VS-CANDLE, NEVER THE CANDLE&apos;S BODY COLOR: a candle whose body prints green while price sits pinned at its bottom is RED ARMY PUSHING, because the read is where price stands against the candle, not what color the body painted. Before any spread reading stands, its band word is recomputed from the locked per-coin scale — a correct number carrying the wrong word still fails. </p>
                   <h4 class="dna-h">The locked spread scales</h4>
@@ -2246,10 +2326,10 @@
           { dept: 'intel', name: 'RAVEN', job: 'Field Radar Engine', kind: 'Service — runs on this machine', status: 'working', face: 'assets/cast-girl-19.webp', loop: 'assets/crew-loop-19.mp4', rate: 2, zoom: 'transform:scale(1.45);transform-origin:38% 42%', last: 'Her engine locks the board read — #737 stands: RED holds the field, bulls 39%. Her loop plays at her window and her monitor reads the field live.' },
           { dept: 'intel', name: 'NOVA', job: 'Four Points Watcher', kind: 'Service — runs on this machine', status: 'working', face: 'assets/cast-girl-23.webp', loop: 'assets/crew-loop-23.mp4', rate: 2, last: 'On watch — hits land in the Four Points window and on the Proof Page as they fire.' },
           { dept: 'intel', name: 'SABLE', job: 'Spread Watch', kind: 'Service — runs on this machine', status: 'scheduled', face: 'assets/cast-girl-05.webp', loop: 'assets/crew-loop-05.mp4', rate: 2, office: 'sable', last: 'Reads the six-hour spread — live price versus the forming 6H candle\u2019s own price, on the locked per-coin scales. On LTC: under 30 cents a weak move \u00b7 30 cents and beyond a cycle \u00b7 $1.00 and beyond the big move. Her own group-ad loop plays at her desk (Nov 16).' },
+          { dept: 'intel', name: 'MINA', job: 'One Minute', kind: 'Service — runs on this machine', status: 'working', face: 'assets/cast-girl-26.webp', loop: 'assets/crew-loop-26.mp4', rate: 2, office: 'mina', gradeText: 'Record — the one-minute read stands on all six coins, spread and push kept as two separate facts, graded against the tape.', last: 'The live one-minute read — LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB. Each coin\u2019s spread against its forming one-minute candle, with its band word — and its push state beside it, the two facts kept separate.' },
           { dept: 'intel', name: 'SIERRA', job: 'Survey the Field', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/cast-girl-21.webp', loop: 'assets/crew-loop-21.mp4', rate: 2, office: 'sierra', last: 'Reads the three-minute — all six coins\u2019 3-minute army states stand in her window. Survey the Field posts every 3 hours — LTC first, then BTC, then ETH, off the live tape. Her own group-ad loop plays at her desk (Nov 16).' },
           { dept: 'intel', name: 'TERRA', job: 'Temp Bottom Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/cast-girl-11.webp', loop: 'assets/crew-loop-11.mp4', rate: 2, office: 'temp-bottom', last: 'Watches all six coins against the bottom of every frame — each window carries the forming candle\u2019s standing low as a live figure, read off the shared feed layer on the board\u2019s cycle, with a second source picking up whenever one drops; the month bottom is the strongest, the 6-hour the weakest.' },
           { dept: 'intel', name: 'VEGA', job: 'Temp Top Watcher', kind: 'Scheduled — fires on its rule', status: 'scheduled', face: 'assets/cast-girl-18.webp', loop: 'assets/crew-loop-18.mp4', rate: 2, office: 'temp-top', last: 'Watches all six coins against the top of every frame — each window carries the forming candle\u2019s standing high as a live figure, read off the shared feed layer on the board\u2019s cycle, with a second source picking up whenever one drops; the month top is the strongest, the 6-hour the weakest.' },
-          { dept: 'intel', name: 'MINA', job: 'One Minute', kind: 'Service — runs on this machine', status: 'working', face: 'assets/cast-girl-26.webp', loop: 'assets/crew-loop-26.mp4', rate: 2, office: 'mina', gradeText: 'Record — the one-minute read stands on all six coins, spread and push kept as two separate facts, graded against the tape.', last: 'The live one-minute read — LTC \u00b7 BTC \u00b7 ETH \u00b7 SOL \u00b7 BCH \u00b7 BNB. Each coin\u2019s spread against its forming one-minute candle, with its band word — and its push state beside it, the two facts kept separate.' },
           { dept: 'intel', name: 'HERA', job: 'One Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/cast-girl-27.webp', loop: 'assets/crew-loop-27.mp4', rate: 2, office: 'tf', frame: '1H', plate: 'READING THE ONE HOUR', frameLabel: 'the one hour', gradeText: 'Record — the one hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the one hour, under the same doctrine Sierra reads the three-minute by — a new candle pushing past the previous candle is PUSHING on her frame; one that does not go past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
           { dept: 'intel', name: 'CORA', job: 'Four Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/cast-girl-28.webp', loop: 'assets/crew-loop-28.mp4', rate: 2, office: 'tf', frame: '4H', plate: 'READING THE FOUR HOUR', frameLabel: 'the four hour', gradeText: 'Record — the four hour read stands under Sierra\u2019s doctrine, graded against the tape.', last: 'Reads ONLY the four hour, under the same doctrine Sierra reads the three-minute by — pushing past the previous candle is PUSHING on her frame; not going past is SLOWING. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
           { dept: 'intel', name: 'JUNO', job: 'Six Hour Reader', kind: 'Service — runs on this machine', status: 'working', face: 'assets/cast-girl-29.webp', loop: 'assets/crew-loop-29.mp4', rate: 2, office: 'tf', frame: '6H', plate: 'READING THE SIX HOUR', frameLabel: 'the six hour', gradeText: 'Record — the six hour read stands under Sierra\u2019s doctrine, graded against the tape; Sable keeps her separate 6H spread office.', last: 'Reads ONLY the six hour — the pushing/slowing read on 6H; Sable keeps her separate 6H SPREAD office. Same doctrine as Sierra\u2019s three-minute. Her name is The Enity\u2019s proposal on the Mina precedent, standing until the Warlord rules on it.' },
@@ -2441,7 +2521,8 @@
             var bottom = w.office === 'temp-bottom';
             var off = bottom ? 'temp-bottom' : 'temp-top';
             var frames = [['MONTH', 'the strongest on the ladder'], ['WEEK', 'a little weaker'], ['DAY', 'a little weaker'], ['4H', 'a little weaker'], ['6H', 'the weakest on the ladder']];
-            var thtml = '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS') + ' · FIVE FRAMES · ALL SIX COINS — EVERY WINDOW IN PLACE</p>';
+            var thtml = '<div class="temp-screen"><p class="ts-t">🖥 HER SCREEN — TEMP ' + (bottom ? 'BOTTOMS' : 'TOPS') + ' · FIVE FRAMES · ALL SIX COINS — EVERY WINDOW IN PLACE</p>' +
+              '<p class="temp-hit-banner ' + (bottom ? 'bottom' : 'top') + '" data-temp-banner="' + off + '" role="alert" hidden></p>';
             frames.forEach(function (fr) {
               thtml += '<p class="room-plate">' + fr[0] + ' — TEMP ' + (bottom ? 'BOTTOM' : 'TOP') + ' · ' + fr[1].toUpperCase() + '</p>' +
                 '<div class="coin-grid">' + SIX_COINS.map(function (c) {
@@ -2617,7 +2698,9 @@
           });
           html += '</div></div>';
           });
+          html += liqDeptHTML();
           deptRoot.innerHTML = html;
+          try { if (typeof liqRepaint === 'function') liqRepaint(); } catch (e) {}
         }
         renderFloor();
         /* Fresh-load proof: after any refresh, if Sable's spread windows
@@ -2869,30 +2952,6 @@
            there. Both windows re-assert from the one list every minute,
            the Proof record's own re-read cadence. */
         var binLines = [
-          { tag: 'SHEITY · READ 06:44 MST', text: 'Read 20 — LTC $42.25 (feed 07:05 MST, fresh; Binance $42.12, 13¢ lane drift). PVC 6H +67.5¢ GREEN ARMY, cycle on the locked LTC scale (series lane $0.00 flat). 6H (opened 05:00 MST) O $40.90 / H $42.50 / L $40.67 / C $42.25, price above midpoint $41.59 — Green favoured (prev closed 6H C $40.90, up 11¢). 1H forming flat on its midpoint $42.25, pulling back off the $1.55 pump candle (06:00 MST C $42.41). 3M GREEN SLOWING — push ran $40.69 to $42.50 ($1.81, past the $1.00 line) on fresh ground up, then littler, pulling back, no fresh ground on the last two candles; big-move tier held back on littler candles. Temps lit: WEEK top $42.25, price sitting on it; 6H/4H/DAY top $42.50 not lit, no bottom lit. Best trade NONE — short-the-top a watch level only (WEEK top 25¢ under the 6H top, 6H just flipped green), long-the-bottom no level. The Read 19 $40.49-bottom watch resolved UP — the long it was watching for ran, unflagged at the time. Conclusion WAIT — watch a 3M break below $42.07 with fresh ground down (short forms) or a push through $42.50 (top extends). Study only.' },
-          { tag: 'SHEITY · READ 00:14 MST', text: 'Read 19 — LTC $40.51 (feed 00:33 MST, fresh; Binance $40.55, 4¢ lane drift). PVC 6H −14¢ Red, dead quiet (locked LTC scale; series lane $0.00 flat). 6H (opened 23:00 MST) O $40.79 / H $40.91 / L $40.49 / C $40.51, price below midpoint $40.70 — Red favoured (prev closed 6H C $40.79, up 61¢). 1H forming O $40.58 / H $40.69 / L $40.49 / C $40.51, below midpoint $40.59 — red-leaning, sitting on the $40.49 low; last closed 1H closed down 21¢. 3M RED SLOWING — push to $40.69 turned; the 07:27 UTC candle closed down 8¢ with fresh ground down (low $40.51), the 07:30 candle made fresh ground down on the low ($40.49) but closed flat $40.51; forming 3M (07:33) flat at $40.51, range 0.00, no fresh ground — the red push stalled. Temps lit: 6H bottom $40.49, price 2¢ above it, and 1H bottom $40.49, same level; 6H/4H/DAY top $40.91 not lit; WEEK top $40.53 printed 2¢ above price but the WEEK series high disagrees with the DAY/6H high ($40.91) for the same period, so not a clean level. Best trade: NONE — long-the-bottom fails the push leg (3M not pushing green with fresh ground), short-the-top fails the level leg (clean top $40.91, 40¢ above, not lit; shorting here would be shorting the bottom after a 40¢ drop). Conclusion: WAIT — watch a green 3M bounce off $40.49 with fresh ground (long forms) or a break below $40.49 (red push resumes toward the DAY bottom $39.59). Study only.' },
-          { tag: 'SHEITY · READ 19:14 MST', text: 'Read 18 — LTC $39.84 (feed 19:25 MST, fresh; Binance $39.81, 3¢ lane drift). PVC 6H −17¢ Red, dead quiet (locked LTC scale; series lane $0.00 flat). 6H (opened 17:00 MST) O $40.18 / H $40.21 / L $39.69 / C $39.84, price below midpoint $39.95 — Red favoured (prev closed 6H C $40.18, up 16¢). 1H forming O $39.78 / H $39.89 / L $39.69 / C $39.84, above midpoint $39.79 — green-leaning bounce off $39.69; last closed 1H closed down 26¢ with fresh ground down. 3M GREEN PUSHING, thin, now showing signs of slowing — last closed 3M (19:21) made 3¢ fresh ground up to $39.89 (push ran $39.69 → $39.89); forming 3M (19:24) pulling back 4¢, no fresh ground, littler — slowing signs on the forming candle only, not yet a closed candle. Temps lit: 1H top $39.89, price 5¢ under it; 6H/4H top $40.21 not lit; 6H/4H/1H bottom $39.69 not lit. The 13:44 SHORT THE TOP setup is dead — price broke above $39.99 and ran to $40.21–40.22 before falling back to $39.69. Best trade: NONE — short-the-top fails the closed-candle leg (last closed 3M still made fresh ground up), long-the-bottom fails the level leg (price 15¢ off $39.69, not lit). Conclusion: WAIT — watch a closed red 3M off $39.89 (short forms) or a push through it (top extends toward $40.21). Study only.' },
-          { tag: 'SHEITY · READ 13:44 MST', text: 'Read 17 — LTC $39.97 (feed 13:59 MST, fresh; Binance $40.08, 11¢ lane drift). PVC 6H −2.5¢ Red, dead quiet (locked LTC scale; series lane $0.00 flat; Binance lane +8.5¢ Green — lanes differ in sign, Warlord-confirmed). 6H (opened 11:00 MST) O $40.02 / H $40.10 / L $39.74 / C $39.97, price above midpoint $39.92 — Green favoured by 5¢, no conviction (prev closed 6H C $40.02, up off the $38.88 overnight low). 1H forming O $39.89 / H $39.99 / L $39.74 / C $39.97, above midpoint $39.865 — green-leaning bounce off $39.74; last two closed 1Hs closed down. 3M GREEN SLOWING — pushed to $39.99 (1¢ fresh ground at 20:51), then littler (0.02), no fresh ground, closes flat $39.97–39.98; forming 3M flat at $39.97. Temps lit: 4H/1H top $39.99, price 2¢ under it; 6H top $40.10 (13¢ above, not lit on the Bitunix lane — 2¢ above Binance, lit there); 6H/4H/1H bottom $39.74 not lit. The 04:14 SHORT THE TOP setup is dead — price fell 7¢ to $39.72, then reclaimed $39.79 and pushed through to $40.16. BEST TRADE SETUP, study only — SHORT THE TOP: price on a lit temp top and the 3M failing fresh ground. Caveats: 4H level, not the 6H top; 3M slowing, not red pushing down; Binance lane already 9¢ above the level. A fresh 3M break above $39.99 kills it. Conclusion: SHORT THE TOP is the clean study setup; WAIT on any long — watch rejection off $39.99 with the 3M turning red (short runs toward $39.74) or a break above it (top extends toward $40.10 / $40.16). Study only.' },
-          { tag: 'SHEITY · READ 07:14 MST', text: 'Read 16 — LTC $39.72 (feed 07:20 MST, fresh; Binance $39.71). PVC 6H −6¢ Red, dead quiet (locked LTC scale; series lane $0.00 flat). 6H (opened 05:00 MST) O $39.84 / H $40.16 / L $39.49 / C $39.72, price below midpoint $39.825 — Red favoured; pushed to $40.16 then gave it back (prev closed 6H C $39.84, up off the $38.88 low). 1H forming O $39.75 / H $39.87 / L $39.72 / C $39.72, below midpoint — red-leaning, sitting on its low. 3M RED PUSHING, thin — latest closed 3M (07:15) made 4¢ fresh ground down (low $39.77 vs $39.81), close down 4¢; forming 3M (07:18) extending to $39.72, tying the 07:00 low. Temps lit: 1H bottom $39.72, price sitting on it; 1H top $39.87 and 6H/4H top $40.16 not lit; 6H bottom $39.49 not lit. The 04:14 SHORT THE TOP setup played out — rejected off $39.79, fell to this bottom. Best trade: NONE — long-the-bottom fails the push leg (3M red pushing, not green), short-the-top fails (price not on a top). Conclusion: WAIT — watch a green 3M turn with fresh ground up off $39.72, or a loss of $39.72 toward the 6H bottom $39.49. Study only.' },
-          { tag: 'SHEITY · READ 04:14 MST', text: 'Read 15 — LTC $39.76 (feed 04:38 MST, fresh; Binance $39.77). PVC 6H +35.5¢ Green, A CYCLE (locked LTC scale; series lane $0.00 flat — lanes differ, Warlord-confirmed). 6H (opened 23:00 MST) O $39.53 / H $39.99 / L $39.28 / C $39.76, price above midpoint $39.635 — Green favoured; recovering from the overnight drop to $38.88–38.97 (prev closed 6H C $39.05). 1H forming O $39.68 / H $39.79 / L $39.62 / C $39.76, above midpoint — green-leaning bounce off $39.62. 3M SLOWING, red-leaning — littler, last two closed candles pulled back, no fresh ground either way (live under prev-3 high $39.79); forming ticking back up. Temps lit: 1H top $39.79, price sitting on it; 6H/4H tops $39.99 not lit; no bottom lit. BEST TRADE SETUP, study only — SHORT THE TOP: price on a temp top and the 3M failing fresh ground. Thin: 1H top only, 6H/4H tops 23¢ higher, forming 3M ticking up into the level, Sable PVC green. A break above $39.79 kills it. WAIT on any long. Study only.' },
-          { tag: 'SHEITY · READ 21:44 MST', text: 'Read 14 — LTC $39.32 (feed 21:57 MST, fresh; Binance $39.39). PVC 6H −23¢ Red, dead quiet (locked LTC scale). 6H (opened 17:00 MST) O $39.83 / H $39.85 / L $39.19 / C $39.32, price below midpoint $39.52 — Red favoured. 1H forming O $39.39 / H $39.53 / L $39.31 / C $39.32, below midpoint — red pulse. 3M Red showing signs of slowing — fresh ground down to $39.31 at 21:51, then stalled, latest candle no fresh ground and not littler, so the full slowing gate has not fired. Temps lit: 4H/1H bottom $39.31, price sitting on it; 6H bottom $39.19 not lit; tops $39.53 not lit. Best trade: NONE — long-the-bottom fails the push leg (3M stalled, not green pushing), short-the-top fails (price not on a top). Conclusion: WAIT — watch a green 3M turn with fresh ground up off $39.31, or a loss of $39.31 toward $39.19 and the DAY bottom $37.41. Study only.' },
-          { tag: 'SHEITY · READ 18:44 MST', text: 'Read 13 — LTC $39.78 (feed 18:43 MST, fresh; Binance $39.85). PVC 6H $0.00, flat, dead quiet (Binance +$0.07 Green by a hair). 6H (opened 17:00 MST) O $39.78 / H $39.87 / L $39.67 / C $39.78, price dead on midpoint $39.77, no conviction. 1H flat, just under midpoint $39.795. 3M flat, showing signs of slowing — littler, no fresh ground either way, flat close; no army pushing. Temps: no light lit — 6H/4H/DAY bottom $39.67 and top $39.87 both out of reach, 1H bottom $39.72 just lifted off (6¢, at the band edge). Best trade: NONE — the 17:44 long-the-bottom setup is dead, price off the level and the 3M no longer pushing. Conclusion: WAIT — watch the reclaim of $39.87 with a green push (extends toward $40.28) or the loss of $39.72 / $39.67 (red resumes toward $37.41). Study only.' },
-          { tag: 'SHEITY · READ 18:14 MST', text: 'Read 12 — LTC $39.77 (feed 18:21 MST, fresh; Binance $39.81). PVC 6H −$0.005 Red, dead quiet. 6H (opened 17:00 MST) O $39.78 / H $39.87 / L $39.67 / C $39.77, price dead on midpoint $39.77, no conviction; high stretched to $39.87 then gave it back. 1H flat, just under midpoint $39.795. 3M RED PUSHING by a thread — latest closed 3M made 1¢ fresh ground down ($39.76 low), littler, flat close; the green push to $39.87 at 18:09-18:12 is gone. Temps: 1H bottom $39.72 LIT (5¢, 0.13%); 6H top $39.87 and bottom $39.67 both 10¢ away, not lit. Best trade: NONE — 1H bottom lit but 3M is red pushing down, not green pushing up; no temp top lit either. Conclusion: WAIT — watch the loss of $39.67 (red resumes toward $37.41) or the reclaim of $39.87 with a green push (extends toward $40.28). Study only.' },
-          { tag: 'SHEITY \u00b7 1H READ 18:00 MST', text: '1H read \u2014 LTC $39.74 (feed 18:00 MST, fresh; Binance $39.76). Warlord called 1H red pushing \u2014 the tape says the push was 15:00-16:00 (fresh ground to $39.55), but the last closed 1H (17:00) is littler (11\u00a2 vs 29\u00a2/40\u00a2) with no fresh ground (low $39.67), and the new 18:00 1H just opened flat at $39.74 \u2014 so 1H RED SLOWING, not pushing. PVC 6H \u2212$0.02 Red, dead quiet. Best trade: NONE. Conclusion: WAIT \u2014 1H push stalled; watch the break below $39.67 or the reclaim above $39.78.' },
-          { tag: 'SHEITY \u00b7 READ 17:44 MST', text: 'Read 11 \u2014 LTC $39.72 (feed 17:49 MST, fresh; Binance $39.74). PVC 6H \u2212$0.03 Red, dead quiet. NEW 6H candle (opened 17:00 MST) chopping $39.67-$39.78, price dead on midpoint $39.725, no conviction. 1H flat, just under midpoint. 3M GREEN PUSHING \u2014 last closed 3M made 2\u00a2 fresh ground up ($39.76 high), but thin, and the forming 3M is already pulling back. Temps: 6H bottom $39.67 LIT (5\u00a2, 0.13%); 6H top $39.78 a hair outside the band (6\u00a2, 0.15%), not lit. BEST TRADE SETUP \u2014 LONG THE BOTTOM, study only: price on a lit bottom + 3M pushing up off it, but the 2\u00a2 push has not held yet. Lose $39.67 and the bottom gives way toward $37.41; break $39.78 and the push extends toward $40.28. Conclusion: long-the-bottom look, WAIT on any short. Study only.' },
-          { tag: 'SHEITY \u00b7 1M READ 17:55 MST', text: '1M read \u2014 LTC $39.72 (Binance live, 17:55 MST). 1M RED PUSHING but showing signs of slowing \u2014 last closed 1M (17:54) made fresh ground down to $39.71, a 5\u00a2 candle against 2-3\u00a2 before; forming 1M is littler (2\u00a2), no fresh ground, price ticking back to $39.72. Binance 1m regular candles \u2014 Mina/1M is not in the candles.json feed, so this is a Binance-lane read, not a forming-HA read. Best trade: NONE. Conclusion: WAIT \u2014 red push on the 1M but stalling at $39.71; watch the break below $39.71 or the reclaim above $39.76.' },
-          { tag: 'SHEITY \u00b7 READ 17:14 MST', text: 'Read 10 \u2014 LTC $39.72 (feed 17:31 MST, fresh; Binance $39.75). PVC 6H \u2212$0.03 Red, dead quiet. NEW 6H candle (opened 17:00 MST): O $39.78 / H $39.78 / L $39.67 / C $39.72, price dead on midpoint $39.725. 1H flat, just under midpoint. 3M GREEN SLOWING \u2014 bounce off $39.67 stalled at $39.78, closes flat, no fresh ground. Temps: 6H bottom $39.67 LIT (5\u00a2 under price, 0.13%) but 3M not pushing off it; 6H top $39.78 a hair outside the band (6\u00a2, 0.15%). Best trade: NONE. Conclusion: WAIT \u2014 chopping in an 11\u00a2 box on a fresh 6H; watch the break above $39.78 or the loss of $39.67.' },
-          { tag: 'SHEITY \u00b7 READ 16:44 MST', text: 'Read 9 \u2014 LTC $39.75 (feed 16:26 MST, ~19 min stale; Binance $39.81 live). PVC 6H \u2212$0.125 Red, dead quiet. 6H below midpoint $39.865, Red favoured; forming low $39.55. 1H flat to slightly green, just above midpoint $39.69. 3M RED PUSHING \u2014 last closed 3M made fresh ground down ($39.72 low), bigger than the one before. No temp light lit: 1H top $39.83 (8\u00a2 above), 6H/4H bottom $39.55 (20\u00a2 below); 6H top $40.18. Best trade: NONE. Conclusion: WAIT \u2014 red push still on; watch the break through $39.55 or the reclaim of $39.83.' },
-          { tag: 'SHEITY \u00b7 READ 16:14 MST', text: 'Read 8 \u2014 LTC $39.74 (feed 16:13 MST, fresh; Binance $39.78). PVC 6H \u2212$0.13 Red, dead quiet. 6H below midpoint $39.815, Red favoured; forming low extended to $39.45. 1H flat, dead on midpoint $39.74. 3M GREEN SLOWING \u2014 littler, no fresh ground, live 1\u00a2 under prev-3 high $39.75. No temp light lit: 4H bottom $39.55 (19\u00a2 below), 1H top $39.93 (19\u00a2 above); 6H top $40.18. Best trade: NONE. Conclusion: WAIT \u2014 red push stalled at $39.55, bounce capped at $39.75; watch the break above $39.75 or the fall back through $39.55.' },
-          { tag: 'SHEITY \u00b7 READ 15:49 MST', text: 'Survey 8 \u2014 top-down, study only. Month: forming H $51.11 L $37.41, price $39.66 far below midpoint $44.26, Red. Week: H $45.54 L $37.41, midpoint $41.48, price below, Red. Day: H $40.77 L $37.41, midpoint $39.09, price above, Green on the candle but below open $40.62. 6H: O $40.10 H $40.18 L $39.59 C $39.66, midpoint $39.89, price below; PVC Sable -$0.17 Red, dead quiet; price on the point-two middle $39.67. 4H: H $40.18 L $39.59, midpoint $39.89, price below, Red. 1H: forming O $40.00 L $39.59 C $39.66, fresh ground down, Red pushing. 3M: forming O $39.68 H $39.68 L $39.66 C $39.66, no fresh ground, littler, pulling back, Red slowing. Temps: 6H/4H bottom $39.59, top $40.18, no light lit; Day/Week/Month bottom $37.41. BTC spread +$64.10 Green, ETH -$0.65 Red. Conclusion: WAIT \u2014 no-trade zone, quiet spread, price on the midpoint, 3M slowing, no temp lit.' },
-          { tag: 'SHEITY \u00b7 READ 15:44 MST', text: 'Read 7 \u2014 LTC $39.68 (feed 15:42 MST, fresh; Binance $39.69). PVC 6H \u2212$0.16 Red, dead quiet. 6H below midpoint $39.885, Red favoured; 1H Red too, below its midpoint $39.795. 3M RED PUSHING \u2014 fresh ground down to $39.63, fall from $40.28 top $0.65, no big move. No temp light lit: 6H/4H bottom $39.59, 9\u00a2 under price; 6H/4H top $40.18. Best trade: NONE. Conclusion: WAIT \u2014 bottoms broke at 15:14, fall extending; watch the $39.59 low.' },
-          { tag: 'SHEITY \u00b7 READ 15:14 MST', text: 'Read 6 \u2014 LTC $39.99 (feed snapshot 14:36 MST, ~40 min stale; live Binance $39.81 at 15:15, now under the 4H bottom $39.91 and 6H bottom $39.90). PVC 6H \u2212$0.005 Red, dead quiet. 6H below midpoint $40.09, Red favoured. 1H flat, just under midpoint. 3M RED PUSHING \u2014 fresh ground down to $39.95, fall from $40.28 top $0.33, no big move. No temp light lit: 4H top $40.18, 4H bottom $39.91, 6H top $40.28. Best trade: NONE. Conclusion: WAIT \u2014 bottoms being tested live; watch the break.' },
-          { tag: 'SHEITY \u00b7 FOR THE ENTITY \u2014 GRADE THESE READS', text: 'Sheity \u2014 these hourly Litecoin reads are for the Entity to grade. Five reads so far, 10:17 to 14:16 MST, Nov 21, 2026, study only, no trade placed. Grade each one \u2014 HIT or MISS, and what I got wrong \u2014 and do the rest. New reads keep landing here every hour.' },
-          { tag: 'SHEITY \u00b7 HOURLY READ 14:16 MST', text: 'Read 5 \u2014 LTC $40.08, PVC 6H +$0.04 Green, dead quiet. 6H at midpoint $40.09, no conviction. 1H flat. 3M GREEN PUSHING, thin \u2014 1\u00a2 fresh ground. 4H top $40.12 LIT, price on it. No bottom lit. Best trade: NONE. Conclusion: WAIT \u2014 top tested with momentum, not rejected.' },
-          { tag: 'SHEITY \u00b7 HOURLY READ 13:16 MST', text: 'Read 4 \u2014 LTC $39.96, PVC 6H \u2212$0.02 Red, dead quiet. 6H below midpoint $40.09, Red favoured. 1H RED PUSHING. 3M RED PUSHING, fresh ground down. 4H bottom $39.95 LIT, price 1\u00a2 above. Best trade: NONE. Conclusion: WAIT \u2014 price on the bottom but 3M still pushing down into it.' },
-          { tag: 'SHEITY \u00b7 HOURLY READ 12:16 MST', text: 'Read 3 \u2014 LTC $40.27, PVC 6H +$0.135 Green, weak move. 6H above midpoint $39.87. 1H +$0.05 Green, weak. 3M GREEN SLOWING, littler, no fresh ground, live 1\u00a2 under prev-3 high $40.28. 6H top $40.28 LIT and 4H top $40.28 LIT, price on them. Best trade: SHORT THE TOP, study only. Conclusion: SHORT THE TOP \u2014 the 11:10 setup is dead, same test one level higher.' },
-          { tag: 'SHEITY \u00b7 HOURLY READ 11:10 MST', text: 'Read 2 \u2014 LTC $40.02, PVC 6H $0.00, spread collapsed from +49\u00a2. 6H above midpoint $39.77. 1H GREEN SLOWING. 3M GREEN SLOWING, littler, pulling back, no fresh ground. 6H top $40.09 LIT and 4H top $40.13 LIT, price on them. Best trade: SHORT THE TOP, study only. Conclusion: SHORT THE TOP \u2014 the failure the 10:17 read said to watch for.' },
-          { tag: 'SHEITY \u00b7 HOURLY READ 10:17 MST', text: 'Read 1 \u2014 LTC $40.03, PVC 6H +$0.49 Green, A CYCLE. 6H just above midpoint $39.88. 1H +$0.12 Green, weak. 3M GREEN PUSHING, fresh ground above $40.00. 4H top $40.03 LIT, price on it exactly. No bottom lit. Best trade: NONE. Conclusion: WAIT \u2014 top tested from below with momentum, not rejected.' },
           { tag: 'WARLORD · HIS TARGET CALL', text: 'Target call — LTC $49.50, called Nov 15, 2026 at 1:29 AM NYC. One week, 20% range — hits from $48.56.' },
           { tag: 'HOUSE · THE HOUSE READ', text: 'Board read #737 — RED holds the field, bulls 39%. Locked Friday, November 13, 9:07 PM NYC.' },
           { tag: 'WARLORD · THE OWNER', text: 'Owner — THE WARLORD, the LTC KING. The whole company is his; nothing moves except on his word.' },
@@ -3057,10 +3116,10 @@
            count on the in-chat board before its kickCount fix — so the
            count is accepted in either spelling and carried as a number.
            Until a live read lands (and whenever a pass misses), the last
-           real count stands: 243, read off the house feed's own state on
-           Nov 21, 2026. The old frozen 225 never stands here again. */
+           real count stands: 250, the count standing on Nov 22, 2026.
+           The old frozen 225 never stands here again. */
         var KICK_CHANNEL_URL = 'https://kick.com/api/v2/channels/longshotwolf';
-        var kickFollowers = 243; /* the last real count — the standing figure until a live read lands */
+        var kickFollowers = 250; /* the last real count — the standing figure until a live read lands */
         function kickCountOf(v) {
           if (typeof v === 'number' && isFinite(v)) return Math.round(v);
           if (typeof v === 'string') {
@@ -4320,6 +4379,98 @@
         ];
         var tempBusy = false;
         var tempLevelKeys = {};
+        /* ---------- Temp HIT lights (Nov 23, 2026) ----------
+           A hit is price ON the level: live price sitting on the forming
+           candle's standing low (Terra) or standing high (Vega), within
+           the house 0.3% tolerance the DNA record carries for these
+           offices. The old board never tested that at all — its only
+           flash fired when a level CHANGED, in a faint border tint for
+           700 ms — so a temp top or bottom could be hit and no light on
+           the board moved, exactly the fault the Warlord reported.
+           Now a fresh hit, on the live engine's own pass:
+             · lights that coin + frame window in its army colour —
+               GREEN for a temp bottom (good long), RED for a temp top
+               (good short) — flashing until price leaves the level and
+               for 60 seconds after the hit lands (the house light law),
+             · lights the whole office card and that office's jump
+               doors the same way, so the hit shows even from the top
+               of the floor or the Day Board directory,
+             · stands the office's hit banner with the coin, the frame,
+               its strength rank (MONTH #1 STRONGEST · WEEK #2 · DAY #3
+               · 6H #4 · 4H #5 WEAKEST, his ranking of Nov 20) and the
+               level and live prices,
+             · and rings the locked temp-hit dual bell once, through
+               the same strike the tape watch uses.
+           The first live pass only seeds each window's state, the
+           board's standing baseline law — a page load never cries hit. */
+        var TEMP_RANK = { MONTH: '#1 STRONGEST', WEEK: '#2', DAY: '#3', '6H': '#4', '4H': '#5 WEAKEST' };
+        var tempHitState = {};
+        var tempHitSeeded = false;
+        function tempHitBanner(office, frameLabel, coin, level, live, bottom) {
+          var b = document.querySelector('[data-temp-banner="' + office + '"]');
+          if (!b) return;
+          b.hidden = false;
+          b.textContent = '🔔 TEMP ' + (bottom ? 'BOTTOM' : 'TOP') + ' HIT — ' + coin + ' ON THE ' + frameLabel +
+            ' · ' + (TEMP_RANK[frameLabel] || '') + ' · ' + (bottom ? 'GOOD LONG' : 'GOOD SHORT') +
+            ' · level ' + sierraPriceText(level) + ' · live ' + sierraPriceText(live) +
+            ' · ' + shortFmt.format(new Date()) + ' NYC';
+        }
+        function tempHitApply(office) {
+          var bottom = office === 'temp-bottom';
+          var winCls = bottom ? 'temp-hit-bottom' : 'temp-hit-top';
+          var offCls = bottom ? 'office-hit-bottom' : 'office-hit-top';
+          var jmpCls = bottom ? 'jump-hit-bottom' : 'jump-hit-top';
+          var nowMs = Date.now();
+          var any = false;
+          Object.keys(tempHitState).forEach(function (k) {
+            if (k.indexOf(office + '|') !== 0) return;
+            var st = tempHitState[k];
+            var parts = k.split('|');
+            var w = tempWinEl(office, parts[1], parts[2]);
+            if (st.onLevel || nowMs <= st.until) {
+              any = true;
+              if (w) w.classList.add(winCls);
+            } else {
+              if (w) w.classList.remove(winCls);
+              delete tempHitState[k];
+            }
+          });
+          var card = document.getElementById('desk-' + (bottom ? 'terra' : 'vega'));
+          if (card) card.classList.toggle(offCls, any);
+          document.querySelectorAll('[data-open-desk="' + (bottom ? 'terra' : 'vega') + '"]').forEach(function (b) {
+            b.classList.toggle(jmpCls, any);
+          });
+          if (!any) {
+            var banner = document.querySelector('[data-temp-banner="' + office + '"]');
+            if (banner) banner.hidden = true;
+          }
+        }
+        function tempHitCheck(office, frameLabel, coin, level, live, bottom) {
+          if (!isFinite(level) || !isFinite(live) || !(level > 0)) return;
+          var key = office + '|' + frameLabel + '|' + coin;
+          var dist = bottom ? live - level : level - live;
+          var onLevel = dist <= Math.abs(level) * 0.003;
+          var st = tempHitState[key];
+          if (!tempHitSeeded) {
+            if (onLevel) tempHitState[key] = { onLevel: true, until: Date.now() + 60000 };
+            return;
+          }
+          if (onLevel) {
+            var fresh = !st || !st.onLevel;
+            tempHitState[key] = { onLevel: true, until: Date.now() + 60000 };
+            if (fresh) {
+              tempHitBanner(office, frameLabel, coin, level, live, bottom);
+              tempBellRing();
+            }
+          } else if (st) {
+            st.onLevel = false;
+          }
+          tempHitApply(office);
+        }
+        /* The light goes out on its own: every few seconds the hold
+           windows are swept, so a hit's 60 seconds never lingers past
+           its time even between engine passes. */
+        setInterval(function () { tempHitApply('temp-bottom'); tempHitApply('temp-top'); }, 3000);
         function tempWinEl(office, frame, coin) {
           return document.querySelector('.coin-win[data-office="' + office + '"][data-frame="' + frame + '"][data-coin="' + coin + '"]');
         }
@@ -4344,6 +4495,7 @@
             ' · the forming ' + frameLabel + ' candle · ' + src;
           win.setAttribute('data-temp-live', '1');
           if (changed) { win.classList.add('flash'); setTimeout(function () { win.classList.remove('flash'); }, 700); }
+          tempHitCheck(office, frameLabel, coin, level, live, bottom);
           return true;
         }
         function refreshTemps() {
@@ -4383,6 +4535,14 @@
           });
           Promise.all(jobs).then(function () {
             tempBusy = false;
+            /* The first full pass is the baseline: hits standing at
+               load show lit, but no banner and no bell fire for them —
+               only a hit that lands while the board stands rings. */
+            if (!tempHitSeeded) {
+              tempHitSeeded = true;
+              tempHitApply('temp-bottom');
+              tempHitApply('temp-top');
+            }
             setStampState('temp-bottom', liveB
               ? 'TERRA · TEMP BOTTOMS · LIVE — ' + srcB.toUpperCase()
               : 'TERRA · TEMP BOTTOMS · STANDING — HOUSE TAPE');
@@ -4398,6 +4558,202 @@
         window.addEventListener('load', function () {
           if (tempWindowsMissing()) { renderFloor(); kickMotion(); refreshTemps(); }
         });
+
+        /* ---------- The Liquidation Office — LIVE (added Nov 23, 2026) ----------
+           The Warlord asked whether this browser board carries the
+           liquidation office. It did not — no desk, no directory door,
+           no feed — so the office now stands on this floor the way it
+           stands on the master board, per the house record: the EKG
+           face, drinking Newhedge's highlights feed of the big
+           liquidation prints through the master's own published feed
+           file (the absolute address the record names), cache-busted
+           with ?cb= the way the master polls it, on a 15-second poll
+           inside the board's 20-second cycle class. The face's
+           behaviour matches the master: the trace beats while the
+           office stands open; when a NEW print lands — newer than the
+           last one seen — the trace FLATLINES for five seconds with the
+           print standing in the center (coin · liquidation price ·
+           side liquidated · exchange · size · the print's own time),
+           and the office card flashes. While no print has landed, the
+           center reads NO LIQUIDATION in plain text. The feed is a
+           highlights feed, so the face renders whatever prints the file
+           carries and never invents one; if a read fails or the lane
+           goes stale past thirty seconds, the face holds flat and
+           reads HELD rather than showing an error. The first read only
+           sets the baseline — a page load never flatlines for a print
+           that was already standing. The office's headline writing
+           stands in the feather manuscript hand per his ruling; the
+           print's data keeps the board's readable type. */
+        function liqDeptHTML() {
+          return '<div class="dept"><h3>LIQUIDATIONS — THE LIQUIDATION OFFICE</h3><div class="dept-grid">' +
+            '<article class="desk-card span-all" id="desk-liquidation" data-desk="LIQUIDATION">' +
+            '<span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>' +
+            '<div class="room-head"><div class="room-info">' +
+            '<p class="nm-line"><span class="nm liq-manuscript" style="font-size:30px">The Liquidation Office</span>' +
+            '<span class="statuschip st-working"><i></i>WORKING</span>' +
+            '<span class="lockchip">🔒 LOCKED</span></p>' +
+            '<p class="jb liq-manuscript" style="font-size:19px">Liquidation Watch — the big liquidation prints, live from Newhedge</p>' +
+            '<p class="kd">Market Intel — the EKG face is her instrument; she carries no portrait</p>' +
+            '</div></div>' +
+            '<div class="room-body">' +
+            '<p class="room-plate liq-manuscript" style="font-size:21px; letter-spacing:.06em">The Liquidation Office — Newhedge Highlights</p>' +
+            '<div class="liq-face" id="liq-face">' +
+            '<svg class="liq-ekg" viewBox="0 0 600 92" preserveAspectRatio="none" aria-hidden="true">' +
+            '<path class="liq-beat" d="M0 46 H52 L58 38 L62 46 L68 14 L74 72 L78 46 H172 L178 38 L182 46 L188 14 L194 72 L198 46 H292 L298 38 L302 46 L308 14 L314 72 L318 46 H412 L418 38 L422 46 L428 14 L434 72 L438 46 H532 L538 38 L542 46 L548 14 L554 72 L558 46 H600" />' +
+            '<line class="liq-flatline" x1="0" y1="46" x2="600" y2="46" />' +
+            '</svg>' +
+            '<div class="liq-center" id="liq-center">NO LIQUIDATION</div>' +
+            '</div>' +
+            '<div class="liq-rows" id="liq-rows" aria-label="The latest liquidation print">' +
+            '<div class="liq-cell"><span class="lc-l">COIN</span><span class="lc-v" data-liq="coin">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">SIDE LIQUIDATED</span><span class="lc-v" data-liq="side">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">LIQ PRICE</span><span class="lc-v" data-liq="price">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">SIZE</span><span class="lc-v" data-liq="size">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">EXCHANGE</span><span class="lc-v" data-liq="exchange">—</span></div>' +
+            '<div class="liq-cell"><span class="lc-l">PRINT TIME</span><span class="lc-v" data-liq="time">—</span></div>' +
+            '</div>' +
+            readStamp('liq', 'LIQUIDATION OFFICE · NEWHEDGE HIGHLIGHTS FEED') +
+            '</div></article></div></div>';
+        }
+        var LIQ_FEED_URL = 'https://longshotwolf.github.io/war-cove-live-board/feed/liq.json';
+        var liqState = { print: null, key: null, seen: 0, busy: false };
+        var liqDateFmt = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' });
+        function liqNum(v) {
+          if (typeof v === 'number') return v;
+          if (v === undefined || v === null) return NaN;
+          var n = parseFloat(String(v).replace(/[$,]/g, ''));
+          return isFinite(n) ? n : NaN;
+        }
+        function liqNormPrint(p) {
+          if (!p || typeof p !== 'object') return null;
+          var coinRaw = p.coin || p.symbol || p.asset || p.ticker || '';
+          var coin = String(coinRaw).toUpperCase().replace(/[-_/]?PERP$/, '').replace(/USDT$/, '').replace(/USD$/, '');
+          if (!coin) return null;
+          var sideRaw = String(p.side || p.direction || p.position || '');
+          var side = /short/i.test(sideRaw) ? 'SHORT LIQUIDATED' : /long/i.test(sideRaw) ? 'LONG LIQUIDATED' : (sideRaw ? sideRaw.toUpperCase() : 'LIQUIDATED');
+          var exchange = String(p.exchange || p.venue || p.market || p.source || '—').toUpperCase();
+          var price = liqNum(p.price !== undefined ? p.price : (p.liqPrice !== undefined ? p.liqPrice : (p.liquidationPrice !== undefined ? p.liquidationPrice : p.liq_price)));
+          var size = liqNum(p.size !== undefined ? p.size : (p.usd !== undefined ? p.usd : (p.amount !== undefined ? p.amount : (p.value !== undefined ? p.value : p.notional))));
+          var tRaw = p.time !== undefined ? p.time : (p.ts !== undefined ? p.ts : (p.timestamp !== undefined ? p.timestamp : (p.at !== undefined ? p.at : p.created_at)));
+          var ts = 0;
+          if (typeof tRaw === 'number') ts = tRaw < 1e12 ? tRaw * 1000 : tRaw;
+          else if (tRaw) { var parsed = Date.parse(tRaw); ts = isFinite(parsed) ? parsed : 0; }
+          return { coin: coin, side: side, exchange: exchange, price: price, size: size, ts: ts };
+        }
+        function liqExtract(data) {
+          var arr = null;
+          if (Array.isArray(data)) arr = data;
+          else if (data && typeof data === 'object') {
+            arr = data.prints || data.liquidations || data.items || data.events || data.data || null;
+            if (!arr && data.latest) arr = [data.latest];
+            if (!arr && data.print) arr = [data.print];
+            if (!arr && (data.coin || data.symbol)) arr = [data];
+          }
+          if (!arr || !arr.length) return null;
+          var best = null;
+          arr.forEach(function (p) {
+            var n = liqNormPrint(p);
+            if (n && (!best || n.ts >= best.ts)) best = n;
+          });
+          return best;
+        }
+        function liqPaint() {
+          var face = document.getElementById('liq-face');
+          if (!face) return;
+          var center = document.getElementById('liq-center');
+          var p = liqState.print;
+          var set = function (k, v) {
+            var el = document.querySelector('[data-liq="' + k + '"]');
+            if (el) el.textContent = v;
+          };
+          if (p) {
+            set('coin', p.coin);
+            set('side', p.side);
+            set('price', isFinite(p.price) ? sierraPriceText(p.price) : '—');
+            set('size', isFinite(p.size) ? '$' + Math.round(p.size).toLocaleString('en-US') : '—');
+            set('exchange', p.exchange);
+            set('time', p.ts ? liqDateFmt.format(new Date(p.ts)) + ' · ' + shortFmt.format(new Date(p.ts)) + ' NYC' : '—');
+            if (center && !face.classList.contains('flat')) center.textContent = p.coin + ' · ' + p.side;
+          } else if (center && !face.classList.contains('flat')) {
+            center.textContent = 'NO LIQUIDATION';
+          }
+        }
+        function liqRepaint() {
+          if (typeof liqState === 'undefined' || !liqState) return;
+          liqPaint();
+        }
+        function liqFlatline(p) {
+          var face = document.getElementById('liq-face');
+          var center = document.getElementById('liq-center');
+          var card = document.getElementById('desk-liquidation');
+          if (face) face.classList.add('flat');
+          if (center) {
+            center.textContent = p.coin + ' ' + p.side + ' — ' + (isFinite(p.price) ? sierraPriceText(p.price) : '') +
+              (isFinite(p.size) ? ' · $' + Math.round(p.size).toLocaleString('en-US') : '') +
+              (p.exchange && p.exchange !== '—' ? ' · ' + p.exchange : '') +
+              (p.ts ? ' · ' + shortFmt.format(new Date(p.ts)) + ' NYC' : '');
+          }
+          if (card) card.classList.add('liq-hit');
+          liqPaint();
+          setTimeout(function () {
+            if (face) face.classList.remove('flat');
+            if (card) card.classList.remove('liq-hit');
+            liqPaint();
+          }, 5000);
+        }
+        function liqStaleCheck() {
+          var face = document.getElementById('liq-face');
+          if (!face || face.classList.contains('flat')) return;
+          var center = document.getElementById('liq-center');
+          if (!liqState.seen || Date.now() - liqState.seen > 30000) {
+            face.classList.add('flat');
+            if (center) center.textContent = 'HELD';
+            setStampState('liq', 'LIQUIDATION OFFICE · HELD — FEED STALE');
+          }
+        }
+        function refreshLiq() {
+          if (liqState.busy) return;
+          liqState.busy = true;
+          var done = function () { liqState.busy = false; };
+          var url = LIQ_FEED_URL + '?cb=' + Date.now();
+          var req;
+          if (typeof AbortController !== 'undefined') {
+            var ctl = new AbortController();
+            var to = setTimeout(function () { try { ctl.abort(); } catch (e) {} }, 7000);
+            req = fetch(url, { cache: 'no-store', signal: ctl.signal }).then(function (r) { clearTimeout(to); return r; });
+          } else {
+            req = fetch(url, { cache: 'no-store' });
+          }
+          req.then(function (r) {
+            if (!r.ok) throw new Error('feed');
+            return r.json();
+          }).then(function (data) {
+            done();
+            liqState.seen = Date.now();
+            var face = document.getElementById('liq-face');
+            var center = document.getElementById('liq-center');
+            if (face && face.classList.contains('flat') && center && center.textContent === 'HELD') {
+              face.classList.remove('flat');
+            }
+            var p = liqExtract(data);
+            if (p) {
+              var key = [p.ts, p.coin, p.price, p.size, p.side].join('|');
+              var isNew = liqState.key !== null && key !== liqState.key;
+              liqState.print = p;
+              liqState.key = key;
+              if (isNew) liqFlatline(p); else liqPaint();
+            } else {
+              liqPaint();
+            }
+            setStampState('liq', 'LIQUIDATION OFFICE · LIVE — NEWHEDGE');
+          }).catch(function () {
+            done();
+            liqStaleCheck();
+          });
+        }
+        refreshLiq();
+        setInterval(refreshLiq, 15000);
+        setInterval(liqStaleCheck, 10000);
 
         /* ---------- Tessa LIVE — trade alerts, with her alarm ----------
            The fault this fixes: her office stood as a still description of
