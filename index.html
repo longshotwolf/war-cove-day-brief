@@ -3667,20 +3667,152 @@
            never a stale figure. */
         /* Discord Activity door: inside Discord the page runs in a
            proxied frame (hostname ends in discordsays.com) that will
-           not let it fetch outside APIs directly. There, Binance
-           candle/ticker calls go first through the relative path
-           "/.proxy/feed" + the API path they would have called on
-           https://data-api.binance.vision (Discord's URL-mapping
-           proxy carries "/.proxy/feed/*" out to that host). The
-           existing direct sources stay behind it in the chain so a
-           dropped proxied call still falls through, and a read that
-           cannot land still shows plain HELD. Outside Discord this
-           is inert: direct sources in the current order, vision
-           host first, exactly as before. */
+           not let it fetch outside APIs directly. The door is the
+           BITUNIX DOOR further down (bare /bx prefix to the house
+           tape itself — master recipe §6B). Outside Discord it is
+           inert: direct sources in the current order, vision host
+           first, exactly as before. */
         var IN_DISCORD_ACTIVITY = (typeof window !== 'undefined' && window.location && window.location.hostname && window.location.hostname.toLowerCase().endsWith('discordsays.com'));
-        var SIERRA_BASES = IN_DISCORD_ACTIVITY
-          ? ['/.proxy/feed', 'https://data-api.binance.vision', 'https://api.binance.com']
-          : ['https://data-api.binance.vision', 'https://api.binance.com'];
+        var SIERRA_BASES = ['https://data-api.binance.vision', 'https://api.binance.com'];
+        /* THE BITUNIX DOOR — rebuilt Nov 25, 2026 on the proven pattern
+           (master recipe §6B; the master copy's room door, closed by the
+           Warlord's eyes Nov 17, 2026). The old door routed Binance
+           calls through a proxy-prefix path in front of
+           data-api.binance.vision — dead twice over in the room: the
+           prefix form addressed this app's own pages, and Binance's
+           edge refuses (403) any call that arrives through Discord's
+           proxy. The proven door: the portal carries the bare prefix
+           /bx out to fapi.bitunix.com, and inside Discord this copy
+           speaks BITUNIX through it — the house tape itself. Bitunix
+           sends CLOSED candles only, so the forming candle is rebuilt
+           the house way: closed sub-candles inside the frame's own
+           boundary, closed out by the live price. Outside Discord none
+           of this runs — the direct chain stands exactly as before. */
+        var BX_BASE = '/bx';
+        var bxTickerCache = { ts: 0, p: null };
+        function bxTickers() {
+          if (bxTickerCache.p && (Date.now() - bxTickerCache.ts) < 3000) return bxTickerCache.p;
+          var p = fetchJSONQ(BX_BASE + '/api/v1/futures/market/tickers', 9000).then(function (j) {
+            if (!j || j.code !== 0 || !Array.isArray(j.data)) throw new Error('bx-shape');
+            return j.data;
+          });
+          bxTickerCache = { ts: Date.now(), p: p };
+          p.then(null, function () { if (bxTickerCache.p === p) bxTickerCache = { ts: 0, p: null }; });
+          return p;
+        }
+        var bxTickTrack = {};
+        function bxNoteTick(coin, price) {
+          var now = Date.now(), b = Math.floor(now / 60000) * 60000;
+          var tr = bxTickTrack[coin];
+          if (!tr || tr.start !== b) { tr = bxTickTrack[coin] = { start: b, open: price, hi: price, lo: price, last: price }; }
+          if (price > tr.hi) tr.hi = price;
+          if (price < tr.lo) tr.lo = price;
+          tr.last = price;
+        }
+        function bxPrice(coin) {
+          var sym = coin + 'USDT';
+          return bxTickers().then(function (rows) {
+            for (var i = 0; i < rows.length; i++) {
+              if (rows[i].symbol === sym) {
+                var v = parseFloat(rows[i].lastPrice);
+                if (isFinite(v)) { bxNoteTick(coin, v); return v; }
+              }
+            }
+            throw new Error('bx-nosym');
+          });
+        }
+        function bxKlineRaw(sym, interval, limit) {
+          return fetchJSONQ(BX_BASE + '/api/v1/futures/market/kline?symbol=' + sym + '&interval=' + interval + '&limit=' + limit, 9000).then(function (j) {
+            if (!j || j.code !== 0 || !Array.isArray(j.data)) throw new Error('bx-shape');
+            return j.data.map(function (k) {
+              return { time: +k.time, open: parseFloat(k.open), high: parseFloat(k.high), low: parseFloat(k.low), close: parseFloat(k.close) };
+            }).filter(function (c) { return isFinite(c.open) && isFinite(c.close) && isFinite(c.time); })
+              .sort(function (a, b) { return a.time - b.time; });
+          });
+        }
+        var BX_FRAME_MS = { '1m': 60000, '3m': 180000, '1h': 3600000, '4h': 14400000, '6h': 21600000, '1d': 86400000, '1w': 604800000 };
+        function bxBoundary(interval, now) {
+          if (interval === '1M') { var d = new Date(now); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1); }
+          if (interval === '1w') { var day = 86400000, ds = Math.floor(now / day) * day; return ds - ((new Date(ds).getUTCDay() + 6) % 7) * day; }
+          var ms = BX_FRAME_MS[interval];
+          return Math.floor(now / ms) * ms;
+        }
+        var BX_SUB = { '3m': ['1m', 3], '1h': ['15m', 4], '4h': ['1h', 4], '6h': ['1h', 6], '1d': ['1h', 24], '1w': ['1d', 7], '1M': ['1d', 31] };
+        function bxForming(coin, interval, boundary, prevClose, live) {
+          var sub = BX_SUB[interval];
+          function build(open, hi, lo, seedClose) {
+            var close = isFinite(live) ? live : seedClose;
+            if (!isFinite(close)) return null;
+            return { time: boundary, open: open, high: Math.max(hi, close), low: Math.min(lo, close), close: close };
+          }
+          if (!sub) {
+            var tr = bxTickTrack[coin];
+            if (tr && tr.start === boundary) return Promise.resolve(build(tr.open, tr.hi, tr.lo, tr.last));
+            if (isFinite(live)) return Promise.resolve(build(live, live, live, live));
+            return Promise.resolve(null);
+          }
+          return bxKlineRaw(coin + 'USDT', sub[0], sub[1] * 2 + 2).then(function (subs) {
+            var inWin = subs.filter(function (c) { return c.time >= boundary; });
+            if (!inWin.length) {
+              if (isFinite(prevClose)) return build(prevClose, prevClose, prevClose, prevClose);
+              if (isFinite(live)) return build(live, live, live, live);
+              return null;
+            }
+            var hi = -Infinity, lo = Infinity;
+            inWin.forEach(function (c) { if (c.high > hi) hi = c.high; if (c.low < lo) lo = c.low; });
+            return build(inWin[0].open, hi, lo, inWin[inWin.length - 1].close);
+          }).catch(function () {
+            if (isFinite(prevClose)) return build(prevClose, prevClose, prevClose, prevClose);
+            if (isFinite(live)) return build(live, live, live, live);
+            return null;
+          });
+        }
+        function bxKlines(coin, interval) {
+          var sym = coin + 'USDT';
+          return bxPrice(coin).catch(function () { return NaN; }).then(function (live) {
+            return bxKlineRaw(sym, interval, 60).then(function (native) {
+              var boundary = bxBoundary(interval, Date.now());
+              var raw = native.filter(function (c) { return c.time < boundary; });
+              var prev = raw[raw.length - 1];
+              if (!prev) throw new Error('bx-empty');
+              return bxForming(coin, interval, boundary, prev.close, live).then(function (forming) {
+                if (forming) raw.push(forming);
+                if (raw.length < 3) throw new Error('bx-shape');
+                return { raw: raw, src: 'Bitunix tape' };
+              });
+            });
+          });
+        }
+        /* The cluster's tape in the room: Bitunix publishes no public
+           trades door, so no live trades lane can ride /bx. The office
+           stands in the room on the house registry's standing prints —
+           the same cluster-whales.json the house collector publishes
+           into this copy (same-origin, so the room's frame can read
+           it) — merged into the panes exactly as live prints merge.
+           Outside Discord this never runs: the live doors carry the
+           office, untouched. */
+        var fpcRegistryLoaded = false;
+        function fpcRegistryLoad() {
+          if (fpcRegistryLoaded) return Promise.resolve();
+          fpcRegistryLoaded = true;
+          return fetchJSONQ('cluster-whales.json', 9000).then(function (doc) {
+            var prints = (doc && doc.prints) || [];
+            var byCoin = {};
+            prints.forEach(function (w) {
+              if (!FPC_COINS[w.c]) return;
+              (byCoin[w.c] = byCoin[w.c] || []).push({ id: 'rg' + w.c + '|' + w.t + '|' + w.p + '|' + w.q + '|' + w.s, t: +w.t, p: parseFloat(w.p), q: parseFloat(w.q), sell: w.s === 'short' });
+            });
+            Object.keys(byCoin).forEach(function (c) {
+              var clean = byCoin[c].filter(function (t) { return isFinite(t.p) && isFinite(t.q) && isFinite(t.t); });
+              if (!clean.length) return;
+              fpcMerge(c, clean);
+              var st = fpcStore(c);
+              st.regSrc = true;
+              if (!st.src) st.src = 'House registry — standing prints';
+            });
+          }).catch(function () {});
+        }
+
         var SIERRA_BIG = { LTC: 1.0, BTC: 1000.0, ETH: 30.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var SIERRA_CYCLE = { LTC: 0.30, BTC: 300.0, ETH: 9.0, SOL: 2.0, BCH: 30.0, BNB: 2.0 };
         var sierraBusy = false;
@@ -3882,6 +4014,7 @@
         }
         function bnKlines(coin, interval) {
           var sym = coin + 'USDT';
+          if (IN_DISCORD_ACTIVITY) return bxKlines(coin, interval);
           var chain = Promise.reject(new Error('start'));
           SIERRA_BASES.forEach(function (base) {
             chain = chain.catch(function () {
@@ -3980,6 +4113,7 @@
         function getTickerPrice(coin) {
           return feedCached('t|' + coin, function () {
             var sym = coin + 'USDT';
+            if (IN_DISCORD_ACTIVITY) return bxPrice(coin);
             var chain = Promise.reject(new Error('start'));
             SIERRA_BASES.forEach(function (base) {
               chain = chain.catch(function () {
@@ -5867,7 +6001,7 @@
              The 3-minute window is short enough to walk forward. */
           var backward = frame.key !== '3M';
           var sources = [];
-          SIERRA_BASES.forEach(function (b) {
+          if (!IN_DISCORD_ACTIVITY) SIERRA_BASES.forEach(function (b) {
             sources.push({ label: 'Binance public aggTrades', fn: function () { return backward ? fpcAggBackward(b, 'bn', sym, win.start, win.end, frame.pages) : fpcAggWindow(b, 'bn', sym, win.start, win.end, frame.pages, true); } });
           });
           sources.push({ label: 'MEXC public aggTrades', fn: function () { return fpcAggWindow('https://api.mexc.com', 'mx', sym, win.start, win.end, frame.pages, false); } });
@@ -5893,7 +6027,7 @@
         function fpcFetchLatest(coin) {
           var meta = FPC_COINS[coin], sym = coin + 'USDT';
           var chain = Promise.reject(new Error('start'));
-          SIERRA_BASES.forEach(function (b) {
+          if (!IN_DISCORD_ACTIVITY) SIERRA_BASES.forEach(function (b) {
             chain = chain.catch(function () {
               return fpcAggLatest(b, 'bn', sym).then(function (ts) { return { trades: ts, src: 'Binance public aggTrades' }; });
             });
@@ -6103,7 +6237,7 @@
            3M · 6H · DAY · WEEK · MONTH — never all at once. */
         function fpcLoadCoin(coin) {
           var seq = ++fpcSeq, st = fpcStore(coin), okCount = 0;
-          var chain = Promise.resolve();
+          var chain = IN_DISCORD_ACTIVITY ? fpcRegistryLoad() : Promise.resolve();
           FPC_FRAMES.forEach(function (frame) {
             chain = chain.then(function () {
               if (seq !== fpcSeq) return null;
@@ -6124,7 +6258,7 @@
           return chain.then(function () {
             if (seq !== fpcSeq || coin !== fpcCoin) return;
             fpcRenderWhaleLine(coin);
-            fpcTapeLine(coin, okCount === 0);
+            fpcTapeLine(coin, okCount === 0 && !st.regSrc);
             fpcRenderOI(coin);
             fpcPrune(coin, Date.now());
           });
@@ -6137,6 +6271,17 @@
           if (fpcBusy) return;
           fpcBusy = true;
           var coin = fpcCoin;
+          if (IN_DISCORD_ACTIVITY) {
+            fpcRegistryLoad().then(function () {
+              if (coin === fpcCoin) {
+                FPC_FRAMES.forEach(function (f) { fpcRenderPane(coin, f); });
+                fpcRenderWhaleLine(coin);
+                fpcTapeLine(coin, !fpcStore(coin).regSrc);
+                fpcRenderOI(coin);
+              }
+            }).then(function () { fpcBusy = false; }, function () { fpcBusy = false; });
+            return;
+          }
           fpcFetchLatest(coin).then(function (res) {
             fpcMerge(coin, res.trades);
             fpcStore(coin).src = res.src;
