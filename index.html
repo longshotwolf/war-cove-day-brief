@@ -1101,10 +1101,10 @@
       .fpc-livechip{ margin-left:auto; display:inline-flex; align-items:center; gap:6px; border-radius:999px; padding:2px 9px;
         font-size:10.5px; font-weight:900; letter-spacing:.08em; background:rgba(16,185,129,.2); color:#6ee7b7; white-space:nowrap; }
       .fpc-livechip i{ width:7px; height:7px; border-radius:50%; background:#34d399; animation:floorLamp 2.2s infinite; }
-      .fpc-switch{ display:flex; gap:4px; border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.5);
-        border-radius:999px; padding:4px; margin-top:10px; max-width:520px; }
-      .fpc-switch button{ flex:1; font:inherit; font-size:12px; font-weight:900; letter-spacing:.05em; border:none; border-radius:999px;
-        padding:7px 8px; cursor:pointer; background:transparent; color:rgba(207,250,254,.7); min-height:34px; }
+      .fpc-switch{ display:flex; flex-wrap:wrap; gap:4px; border:1px solid rgba(103,232,249,.3); background:rgba(0,0,0,.5);
+        border-radius:18px; padding:4px; margin-top:10px; max-width:680px; }
+      .fpc-switch button{ flex:1 1 auto; font:inherit; font-size:12px; font-weight:900; letter-spacing:.05em; border:none; border-radius:999px;
+        padding:7px 8px; cursor:pointer; background:transparent; color:rgba(207,250,254,.7); min-height:34px; white-space:nowrap; }
       .fpc-switch button[aria-pressed="true"]{ background:#a5f3fc; color:#000; box-shadow:0 0 12px rgba(34,211,238,.6); }
       .fpc-tape, .fpc-oi{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:#a5f3fc; margin:9px 0 0; line-height:1.5; }
       .fpc-oi b{ color:#ecfeff; }
@@ -1711,7 +1711,16 @@
                          and a small WINNER SWITCH stands beside each
                          pane's countdown — blinking green while the longs
                          carry the summed whale size, steady red only
-                         while the shorts do, flatline when even. -->
+                         while the shorts do, flatline when even.
+                         CALL 25 SYNC (Nov 24, 2026): the coin switch now
+                         carries ALL SIX coins — SOLANA · BITCOIN CASH ·
+                         BNB stand beside LITECOIN · BITCOIN · ETHEREUM,
+                         each new coin on its own tape with its own
+                         proportional price-row size (SOL 50¢ · BCH $1 ·
+                         BNB $2 rows — the office's proportional method;
+                         his set rulers stand at LTC 50¢ · BTC $50 ·
+                         ETH $1), the whole office riding with the coin
+                         picked and Litecoin still the lead coin. -->
                     <section class="fpc-office" id="footprint-office" aria-label="Footprint Cluster office — each forming candle split into price rows off the public executed-trades tape, whale prints pinned on the center line">
                       <span class="lockmark" aria-label="Locked office">🔒 LOCKED</span>
                       <div class="fpc-head">
@@ -1721,10 +1730,13 @@
                         </div>
                         <span class="fpc-livechip"><i></i>LIVE</span>
                       </div>
-                      <div class="fpc-switch" role="group" aria-label="Footprint coin switch — flips the whole office: every pane, the whale line and the stuck prints">
+                      <div class="fpc-switch" role="group" aria-label="Footprint coin switch — all six coins; flips the whole office: every pane, the whale line and the stuck prints">
                         <button type="button" data-fpc-coin="LTC" aria-pressed="true">LITECOIN</button>
                         <button type="button" data-fpc-coin="BTC" aria-pressed="false">BITCOIN</button>
                         <button type="button" data-fpc-coin="ETH" aria-pressed="false">ETHEREUM</button>
+                        <button type="button" data-fpc-coin="SOL" aria-pressed="false">SOLANA</button>
+                        <button type="button" data-fpc-coin="BCH" aria-pressed="false">BITCOIN CASH</button>
+                        <button type="button" data-fpc-coin="BNB" aria-pressed="false">BNB</button>
                       </div>
                       <p class="fpc-tape" id="fpc-tape-line">TAPE — the office is reading the public executed-trades doors, one pane at a time…</p>
                       <p class="fpc-oi" id="fpc-oi-line">OPEN INTEREST — reading the public doors…</p>
@@ -1763,7 +1775,7 @@
                           <p class="fpc-stats"></p><p class="fpc-reward"></p>
                         </article>
                       </div>
-                      <p class="fpc-note">Whale line on this office: a print of <b>250 LTC · 0.15 BTC · 6 ETH</b> or bigger in one executed trade is a whale — it pins, it sticks, and it cross-prints on every pane whose candle holds it. Three or more whale prints at one price level stand marked as a trail. Absorption is read by the reward test: aggression the price does not reward is absorption. A pane whose tape cannot be fetched on any door reads HELD — no candle is ever invented in its place — and the office re-checks on the board's own cycle.</p>
+                      <p class="fpc-note">Whale line on this office: a print of <b>250 LTC · 0.15 BTC · 6 ETH · 75 SOL · 25 BCH · 15 BNB</b> or bigger in one executed trade is a whale — it pins, it sticks, and it cross-prints on every pane whose candle holds it. Three or more whale prints at one price level stand marked as a trail. Absorption is read by the reward test: aggression the price does not reward is absorption. A pane whose tape cannot be fetched on any door reads HELD — no candle is ever invented in its place — and the office re-checks on the board's own cycle.</p>
                     </section>
 
                     <div class="floor-about">
@@ -2350,6 +2362,20 @@
                   <p class="dna-p"> The game&apos;s board carries the same app wrap as the master: installable, with only its icons and manifest held in the cache — the page itself and all game data are network-only, so a standing board can never serve a stale game. </p>
                   <h4 class="dna-h">The wiring — the Kick door, the tape, and the publish lane</h4>
                   <ul class="dna-list"><li><strong>The Kick door.</strong> The game reads chat through Kick&apos;s OFFICIAL door: the Warlord&apos;s own Kick app receives chat.message.sent events by webhook, delivered through the house tunnel, and every delivery is signature-verified against Kick&apos;s public key before the game acts on it — no unverified message can move a sat. The game speaks back into chat through the same official API, confirming trades and calling liquidations as they land.</li><li><strong>The price tape.</strong> The game&apos;s engine prices every entry, every standing position, and every liquidation off the live house tape, checked on the game loop&apos;s own beat; a position&apos;s liquidation price is fixed from its entry and leverage at the moment it opens and is judged against that same tape.</li><li><strong>The game service.</strong> The engine — balances, positions, liquidation checks, the leaderboard — runs as a house service beside the stream, writing the game state out as it changes; the overlay server carries that state to the board and to the stream&apos;s browser sources (the full board and the stream view alike).</li><li><strong>The publish lane.</strong> The game board publishes to its public GitHub Pages address through the game relay — and the relay republishes DATA ONLY (the state files), never the page itself, so a data republish can never wipe the board&apos;s app wrap, which lives at the publish source. What the lane is for: the players watch the same live game the chat is playing, on a page that can never go stale.</li></ul>
+                  <div class="dna-bar"><span class="dna-bar-cap" aria-hidden="true"></span><h3>The Liquidation Cure, the Flatline Ring, and Calla&apos;s Survey Order — Tuesday Night, November 24, 2026 (Call 25)</h3><span class="dna-bar-cap" aria-hidden="true"></span></div>
+                  <p class="dna-line his">🪶 His word — THE READING LABEL LAW (Call 25, ~9:03 PM MST): when Sheity reads the candles, every price she names carries its seat label — [COIN] TOP · MIDDLE · BOTTOM — on every read: the survey, the spreads, the drill-down. Not a bare price — never &quot;Bitcoin 59…&quot; without its seat: &quot;Bitcoin bottom…&quot;, &quot;Bitcoin top…&quot;, the coin and its seat, every time.</p>
+                  <p class="dna-line mine">🪶 My hand — the label law carried to both readers the same night: posted to Sheity in the binary channel (id 72) so she reads the candles the house way, and sent into the survey build so Calla&apos;s survey-button read labels every price it names with its seat label too. Her graded calls are the measure of whether she has it.</p>
+                  <p class="dna-line his">🪶 His word — CALLA&apos;S OFFICE SURVEY, his correction on the same call: the push-button survey office is CALLA&apos;s office, NOT Sable&apos;s — and her button read expands from Bitcoin · Ethereum · Litecoin to ALL SIX coins PLUS the eight house stocks.</p>
+                  <p class="dna-line mine">🪶 My hand — CALLA&apos;S SURVEY ORDER, recorded plain: when he pushes the button and she surveys the field, she reads them all — the six coins (Litecoin · Bitcoin · Ethereum · Solana · Bitcoin Cash · BNB) PLUS the eight house stocks (NVDA · GOOGL · MSTR · TSLA · META · PLTR · COIN · AAPL) — and under the reading label law every price she names carries its seat label (coin, then TOP · MIDDLE · BOTTOM). The routing fact, stated plain so the record never claims what did not happen: the Day Brief artifact holds no Calla office, no push-button survey read, and no stock tape — so the corrected expansion was NOT built into the Day Brief; it is routed to Calla&apos;s own surface by a separate crew. At the time of this entry it stands ordered and routed, NOT landed; it closes when Calla&apos;s own button reads all six coins and all eight stocks with the seat labels on.</p>
+                  <p class="dna-line his">🪶 His word — CALLA&apos;S FULL READING ONCE AN HOUR (Call 25, later orders): her full reading — the expanded survey, all six coins and the eight stocks, every price labeled TOP · MIDDLE · BOTTOM — fires ONLY ONCE AN HOUR, on the hour, and no more than that.</p>
+                  <p class="dna-line mine">🪶 THE STALE FEED, FOUND AND REPAIRED. On the Warlord&apos;s question — &quot;What about the liquidation rooms? Is it working right?&quot; — the Liquidation Office was checked and found standing but starved: the relay service was active and cycling, yet the store held only 9 prints dated November 19–22 (newest 2026-11-22T03:47:29Z, OKX BTCUSDT), and the served feed carried those same stale prints stamped LIVE. The cause, traced on disk: the relay (liq_relay.py) does not pull Newhedge directly — it folds prints from the battlefield watch&apos;s state key &quot;liquidations,&quot; in the watch&apos;s strict line format. The watch&apos;s current state carried no &quot;liquidations&quot; key at all — only &quot;most_recent_liquidation&quot; (a prose string) and &quot;market_feed_first5&quot; — because the watch&apos;s standing orders never pinned the state schema, so the key drifted out after November 22. Newhedge&apos;s own API offers only aggregate liquidation series, not prints, so it is no substitute. THE REPAIR: the relay gained a strict prose parser (parse_loose) that harvests prints from the prose fields — side, venue, size, price AND time-of-day all required, or the line is skipped, never guessed; a print with no symbol named is BTC, because the battlefield page is a Bitcoin page. Five settled prints from the watch&apos;s own log were folded in, and the served feed was verified live: newest prints 2026-11-25T01:32:41Z — Binance LONG $139,271.33 at $59,214 and Bybit LONG $199,181.39 at $59,034 — with 01:05:04Z Binance Long $151,682.72 at $59,460 and November 24 20:51:49Z Binance Short $216,395.27 at $59,827 standing behind them. One log print was NOT seeded — Binance Long $172,046.01 at $59,511 — because its log line carried no settled timestamp, and a timestamp is never guessed.</p>
+                  <p class="dna-line mine">🪶 THE FULL CURE, ON HIS WORD. The prose lane carries only the newest print per watch run — if two prints land between runs, the older can slip — so the remaining gap was put to the Warlord, and on call 25 (~9:03 PM MST) he ruled: &quot;Yes, get that fixed. I want to see the liquidations in the liquidation office.&quot; The battlefield watch&apos;s standing orders were amended the same night with a new step 3b: every snapshot the watch writes MUST carry a &quot;liquidations&quot; list — every print from that run&apos;s final settled read, in the relay&apos;s strict line format (&quot;HH:MM:SS Liquidated Long on OKX BTC-USDT-SWAP: $112,046.12 at $63,997 — $112.0K&quot;), figures copied exactly as the feed prints them, and an empty list when the settled feed shows no prints. First amended snapshot verified: the watch state stamped 2026-11-25T04:09:00Z carries the key, holding one print — recorded here exactly as written: &quot;03:37:43 UTC Liquidated Short on Binance BTCUSDT: $100,474.05 at $59,487.&quot; Plain note on shape: as written, the line carries &quot;UTC&quot; after the time and names BTCUSDT rather than the strict BTC-USDT-SWAP instrument shape; that same print already stands in the office feed through the relay&apos;s prose harvest, and the key itself now stands present on the watch&apos;s snapshots from that run forward.</p>
+                  <p class="dna-line mine">🪶 THE STAY-UP ORDER. His words on the same call: &quot;And let them stay up for a while so I can see them. Don&apos;t let them just drop right off. Let them stay up for a while.&quot; The relay was trimming its store to the newest 12 prints, so on an active night the office&apos;s prints rolled off almost as fast as they landed. On his order the retention was raised from 12 to 48 prints (KEEP_PRINTS in liq_relay.py), the relay service was restarted and verified active, and the served feed was verified LIVE after the change — 12 prints standing at the check, newest 2026-11-25T03:37:43Z, Binance SHORT $100,474.05 at $59,487. From that restart the store accumulates to 48 prints before the oldest rolls off, so a print stays up in the office for a good long while, the way he ordered.</p>
+                  <p class="dna-line mine">🪶 THE FLATLINE RING. His order, same call: when a liquidation comes up, make a flat line sound ring off, so he knows to check the Liquidation Office. It landed in tonight&apos;s Day Brief build: the Liquidation Office now rings a steady flatline tone — 880 Hz, three seconds — once for each NEWLY-SEEN print that lands while the board is open. The prints already standing when the board first loads do NOT ring, and there is no test ring. The build&apos;s audit verified the tone in — frequency, length, once-per-new-print, silent on first load. It closes by his ears on the live board: the next new print that lands while his board is open should ring, once. And it stands on this browser-link copy the same way: this board&apos;s Liquidation Office rings the same tone, once, for each new print that lands while this board is open.</p>
+                  <p class="dna-line mine">🪶 ALL THE REST OF THE COINS ON THE CLUSTER. His order (~9:17 PM MST): &quot;don&apos;t forget to put all the rest of the coins on the cluster.&quot; The Footprint Cluster office&apos;s coin switch extends from Litecoin · Bitcoin · Ethereum to ALL SIX coins — Solana, Bitcoin Cash and BNB added — switch buttons, tape pulls, whale pins, winner verdicts, the live price marker and the registry merge all riding with the coin picked, exactly as the standing three behave. THE BUCKET FLAG, recorded plain: the Warlord has set NO cluster rulers for Solana, Bitcoin Cash or BNB — his set rulers stand at Litecoin 50 cents, Bitcoin $50, Ethereum $1, and no others. The new coins&apos; price-row sizes therefore follow the office&apos;s existing proportional method; they are the office&apos;s method, NOT his set rulers, and they stand flagged here until he sets rulers for those coins himself. On this browser-link copy the switch now shows all six coins — SOL on 50¢ rows · BCH on $1 rows · BNB on $2 rows, each on its own tape — with Litecoin still the lead coin the office opens on.</p>
+                  <p class="dna-line mine">🪶 THE CLUSTER VERDICT FAULT, HIS REPORT AND THE CHECK. His fault report (~9:12 PM MST): his personal Day Brief showed the 6H cluster as LONG winning (green about 2,700 against red about 2,500) while the stream copy showed SHORT (green about 6,500 against red about 7,100). Main chat pulled the Day Brief&apos;s own cluster read (Litecoin 6H) at 04:13:28Z: whale totals long 4,448.045, short 5,424.967 — SHORTS winning, agreeing with the stream copy and with the red candle; that read carried truncated: true. The registry export summed over the same Candle AT window read long 2,500, short 2,546 — shorts ahead there too. Conclusion on the record: the Day Brief&apos;s server-side read is CORRECT; his open page was holding a stale, partial refresh — in his own words, his personal Day Brief was running slow. Tonight&apos;s verification of the refresh itself: two successive server reads, 04:20:05Z and 04:23:10Z, each returned a fresh read stamp with the live price moved between them ($40.69, then $40.58), so the read cycles — but on both passes the backup trade tape did not answer (&quot;no trade tape answered this pass&quot;), against the landed 04:13Z read; the tape answers only intermittently from this box, and a page sitting between landed passes shows the last partial picture. A standing cluster QC watch (Quinn, every 30 minutes) now checks both boards&apos; verdicts against the tape so a stale verdict gets flagged instead of believed — his order on the same call: &quot;stay somebody on quality control on these clusters to make sure they always running right.&quot;</p>
+                  <p class="dna-line his">🪶 His word — THE FIT CHECK (Call 25, ~9:32 PM MST): &quot;I won&apos;t know if everything fits.&quot; Before the lock-in, every cluster pane on BOTH boards is checked on the served pages: the full candle stands, every whale pin&apos;s label is whole, nothing is clipped at either edge, and the winner switch sits clear of the countdown. Anything that doesn&apos;t fit gets made smaller and re-checked. It closes by HIS EYES.</p>
+                  <p class="dna-line his">🪶 His word — THE LOCK-IN (~9:10 PM MST): &quot;lock in this recipe and DNA and lock everything in because everything looking good and running smooth.&quot; After tonight&apos;s chain lands, the standing state is snapshotted byte-for-byte — the live DNA page · the master recipe · liq_relay.py · the amended watch orders · the guarded publishers · the stream copy — into ~/workspace/locks/2026-11-24-call25/ with a sha256 MANIFEST; after the lock the configuration stands frozen — no changes to those files or boards without his own word.</p>
                   <div class="dna-seal">
                   <div class="dna-glyphrow0" aria-hidden="true">
                   <span class="wc-rod-glyphs" data-glyphs="crown,orb,ltc,diamond,wolf"></span>
@@ -3189,6 +3215,8 @@
           { tag: 'HOUSE · THE FRONT DESK', text: 'Sheity stands at the front desk — President. Her Simli live lane was verified Nov 14.' },
           { tag: 'WARLORD · HIS CHAIN', text: 'His chain — Owner: THE WARLORD → CEO: THE ENITY → President: SHEITY → Research Manager: VERITY → the crew.' },
           { tag: 'HOUSE · THE CEO\u2019S DESK', text: 'The Enity runs the floor day to day — every department reports to her, and every miss becomes a permanent rule fix.' }
+        
+        
         ];
         var binDriftApply = null;
         function binEsc(s) {
@@ -4815,7 +4843,15 @@
            sets the baseline — a page load never flatlines for a print
            that was already standing. The office's headline writing
            stands in the feather manuscript hand per his ruling; the
-           print's data keeps the board's readable type. */
+           print's data keeps the board's readable type.
+           CALL 25 ADDITION (Nov 24, 2026, mirrored from the master
+           Day Brief): a FLATLINE SOUND now rides the same new-print
+           moment — when a NEW print lands while the board is open, a
+           steady flatline tone (880 Hz, three seconds, WebAudio —
+           no audio asset) rings ONCE for that print, so he knows to
+           check the office. The standing print at first load only
+           sets the baseline and never rings; there is no test ring.
+           See liqNotePrint below. */
         function liqDeptHTML() {
           return '<div class="dept"><h3>LIQUIDATIONS — THE LIQUIDATION OFFICE</h3><div class="dept-grid">' +
             '<article class="desk-card span-all" id="desk-liquidation" data-desk="LIQUIDATION">' +
@@ -4933,6 +4969,90 @@
             liqPaint();
           }, 5000);
         }
+        /* ---------- THE FLATLINE SOUND (Call 25 — the Warlord's order,
+           Nov 24, 2026, mirrored from the master Day Brief: "when
+           liquidation come up, make a flat line sound ring off when
+           liquidation come up so I know to check the liquidation
+           office") ----------
+           When a NEW liquidation print lands on this office's feed
+           while the board is open, a steady flatline tone rings ONCE
+           for that print — the sound of the office's own EKG going
+           flat, struck live with WebAudio the way this board's bells
+           are struck (the board carries no audio asset for it): one
+           unbroken tone at a monitor's flatline pitch — 880 Hz with
+           a breath of its octave above — held a full three seconds
+           at a level meant to carry across the room, with a short
+           attack and release so it starts and ends clean instead of
+           clicking. A print's identity is the print itself — its
+           time, coin, price, size and side, the same key the face
+           judges newness by — and the tone fires once per print
+           never seen before in this board session. The print already
+           standing when the board first loads only sets the baseline:
+           it never rings. There is no test ring: the tone fires only
+           on a real new print — the house bell law (real bells on,
+           test bell off). Browser audio rules are honored the way
+           this board's other sounds honor them: a strike the browser
+           blocks is held pending and rings on the first tap or
+           keypress that unlocks audio. Sound only: no layout,
+           wording, data or feed change rides with it. */
+        var liqCtx = null;
+        var liqSeenKeys = {};
+        var liqBaselineDone = false;
+        var liqPendingRings = 0;
+        function liqStrikeFlatline(ctx) {
+          var t0 = ctx.currentTime + 0.01;
+          var master = ctx.createGain();
+          master.gain.value = 0.55;
+          master.connect(ctx.destination);
+          var holdSecs = 3.0;
+          [[1, 1.0], [2, 0.18]].forEach(function (part) {
+            var osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = 880 * part[0];
+            var g = ctx.createGain();
+            g.gain.setValueAtTime(0, t0);
+            g.gain.linearRampToValueAtTime(part[1], t0 + 0.015);
+            g.gain.setValueAtTime(part[1], t0 + holdSecs - 0.25);
+            g.gain.linearRampToValueAtTime(0, t0 + holdSecs);
+            osc.connect(g);
+            g.connect(master);
+            osc.start(t0);
+            osc.stop(t0 + holdSecs + 0.05);
+          });
+        }
+        function liqAttemptRing() {
+          var AC = window.AudioContext || window.webkitAudioContext;
+          if (!AC) return;
+          try {
+            if (!liqCtx) liqCtx = new AC();
+            if (liqCtx.state === 'running') {
+              var strikes = Math.max(1, liqPendingRings);
+              liqPendingRings = 0;
+              for (var i = 0; i < strikes; i++) liqStrikeFlatline(liqCtx);
+              return;
+            }
+            var p = liqCtx.resume();
+            if (p && p.then) p.then(function () {
+              if (liqCtx.state === 'running' && liqPendingRings > 0) {
+                var n = liqPendingRings;
+                liqPendingRings = 0;
+                for (var j = 0; j < n; j++) liqStrikeFlatline(liqCtx);
+              }
+            }).catch(function () {});
+          } catch (e) {}
+        }
+        /* A held ring strikes on the first interaction that unlocks
+           audio — the board's standing rule for all its sounds. */
+        ['pointerdown', 'keydown'].forEach(function (ev) {
+          window.addEventListener(ev, function () { if (liqPendingRings > 0) liqAttemptRing(); });
+        });
+        function liqNotePrint(key) {
+          if (!liqBaselineDone) { liqSeenKeys[key] = true; liqBaselineDone = true; return; }
+          if (liqSeenKeys[key]) return;
+          liqSeenKeys[key] = true;
+          liqPendingRings++;
+          liqAttemptRing();
+        }
         function liqStaleCheck() {
           var face = document.getElementById('liq-face');
           if (!face || face.classList.contains('flat')) return;
@@ -4973,6 +5093,7 @@
               var isNew = liqState.key !== null && key !== liqState.key;
               liqState.print = p;
               liqState.key = key;
+              liqNotePrint(key);
               if (isNew) liqFlatline(p); else liqPaint();
             } else {
               liqPaint();
@@ -5548,11 +5669,30 @@
            chain (Binance Futures → Bybit → OKX) and reads HELD, clusters
            standing, when no OI door answers. Trades are held in memory
            for this session only, so the big candles keep filling in on
-           every board cycle. */
+           every board cycle.
+           CALL 25 EXTENSION (Nov 24, 2026 — "don't forget to put all
+           the rest of the coins on the cluster"): the switch now
+           carries ALL SIX house coins. SOL · BCH · BNB stand on the
+           same switch, each on its own tape (the same door chain —
+           Binance · MEXC · Coinbase · Kraken; neither Coinbase nor
+           Kraken carries BNB, so those two doors simply miss for it
+           and the Binance/MEXC doors serve it, the same way this
+           board's reader lanes treat BNB) and on its own price-row
+           size, sized proportionally to the coin's price the office's
+           own way — SOL 50¢ rows · BCH $1 rows · BNB $2 rows. His set
+           rulers stand at LTC 50¢ · BTC $50 · ETH $1 and no others:
+           the new coins' row sizes are the office's proportional
+           method, NOT his rulers, until he sets rulers for them
+           himself. Each new coin's whale line is sized to the same
+           class as the standing three (75 SOL · 25 BCH · 15 BNB).
+           Litecoin stays the lead coin — the office opens on it. */
         var FPC_COINS = {
           LTC: { step: 0.5, whale: 250, cb: 'LTC-USD', kr: 'LTCUSD' },
           BTC: { step: 50, whale: 0.15, cb: 'BTC-USD', kr: 'XBTUSD' },
-          ETH: { step: 1, whale: 6, cb: 'ETH-USD', kr: 'ETHUSD' }
+          ETH: { step: 1, whale: 6, cb: 'ETH-USD', kr: 'ETHUSD' },
+          SOL: { step: 0.5, whale: 75, cb: 'SOL-USD', kr: 'SOLUSD' },
+          BCH: { step: 1, whale: 25, cb: 'BCH-USD', kr: 'BCHUSD' },
+          BNB: { step: 2, whale: 15, cb: '', kr: '' }
         };
         var FPC_FRAMES = [
           { key: '3M', pages: 6 },
